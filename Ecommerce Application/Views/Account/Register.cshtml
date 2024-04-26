@@ -1,0 +1,56 @@
+﻿@model Ecommerce_Application.Models.Registration
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+    <div class="wrapper" style="overflow:hidden">
+        <div class="text-center mt-4 name">
+            Register
+        </div>
+        <form asp-controller="Account" asp-action="Register" class="p-3 mt-3">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-field d-flex align-items-center"
+                
+                <input asp-for="Name"  placeholder="Name"/>
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="form-field d-flex align-items-center">
+
+            <input asp-for="Username"  placeholder="Username" />
+                <span asp-validation-for="Username" ></span>
+            </div>
+            <div class="form-field d-flex align-items-center">
+
+            <input asp-for="Email" type="email"  placeholder="Email" />
+                <span asp-validation-for="Email" ></span>
+            </div>
+            <div class="form-field d-flex align-items-center">
+
+            <input asp-for="Password" type="password"  placeholder="Password" />
+                <span asp-validation-for="Password" ></span>
+            </div>
+            <div class="form-field d-flex align-items-center">
+
+            <input asp-for="PasswordConfirm" type="password" placeholder="Confirm Password" />
+                <span asp-validation-for="PasswordConfirm" ></span>
+            </div>
+           
+
+            <div class="form-group d-flex justify-content-center align-items-center row">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+
+@section Blank {
+    @{
+
+    }
+}
+@section Blank2 {
+    @{
+
+    }
+}
