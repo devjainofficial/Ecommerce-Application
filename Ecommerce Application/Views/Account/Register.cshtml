@@ -10,14 +10,14 @@
         </div>
         <form asp-controller="Account" asp-action="Register" class="p-3 mt-3">
             <div asp-validation-summary="ModelOnly"></div>
-            <div class="form-field d-flex align-items-center"
+            <div class="form-field d-flex align-items-center">
                 
-                <input asp-for="Name"  placeholder="Name"/>
+                <input asp-for="Name" type="text" placeholder="Name"/>
                 <span asp-validation-for="Name"></span>
             </div>
             <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Username"  placeholder="Username" />
+            <input asp-for="Username" type="text" placeholder="Username" />
                 <span asp-validation-for="Username" ></span>
             </div>
             <div class="form-field d-flex align-items-center">
@@ -34,6 +34,13 @@
 
             <input asp-for="PasswordConfirm" type="password" placeholder="Confirm Password" />
                 <span asp-validation-for="PasswordConfirm" ></span>
+            </div>
+            <div class="form-field d-flex align-items-center">
+
+            <select asp-for="Role">
+                <option>User</option>
+            </select>
+                <span asp-validation-for="Role" ></span>
             </div>
            
 

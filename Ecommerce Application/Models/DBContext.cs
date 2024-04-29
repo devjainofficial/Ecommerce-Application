@@ -9,6 +9,8 @@ namespace Ecommerce_Application.Models
         {
             
         }
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductDetails> ProductDetails { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }

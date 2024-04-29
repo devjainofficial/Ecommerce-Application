@@ -2,4 +2,4 @@
 
 let classList = profileDropdownList.classList;
 
-const toggle1 = () => classList.toggle("active");
+const toggle = () => classList.toggle("active");
