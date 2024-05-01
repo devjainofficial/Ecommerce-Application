@@ -4,6 +4,7 @@ using Ecommerce_Application.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecommerce_Application.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20240430073153_add")]
+    partial class add
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,6 +34,9 @@ namespace Ecommerce_Application.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<bool>("IsAccessories")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsClothing")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -77,10 +83,6 @@ namespace Ecommerce_Application.Migrations
                     b.Property<int>("SellingPrice")
                         .HasColumnType("int");
 
-                    b.Property<string>("ThumbImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
@@ -100,12 +102,15 @@ namespace Ecommerce_Application.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProductDetailsProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("ImageId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductDetailsProductId");
 
                     b.ToTable("ProductImages");
                 });
@@ -326,13 +331,11 @@ namespace Ecommerce_Application.Migrations
 
             modelBuilder.Entity("Ecommerce_Application.Models.ProductImage", b =>
                 {
-                    b.HasOne("Ecommerce_Application.Models.ProductDetails", "Product")
-                        .WithMany("ProductImages")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Ecommerce_Application.Models.ProductDetails", "ProductDetails")
+                        .WithMany("ProductImage")
+                        .HasForeignKey("ProductDetailsProductId");
 
-                    b.Navigation("Product");
+                    b.Navigation("ProductDetails");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -393,7 +396,7 @@ namespace Ecommerce_Application.Migrations
 
             modelBuilder.Entity("Ecommerce_Application.Models.ProductDetails", b =>
                 {
-                    b.Navigation("ProductImages");
+                    b.Navigation("ProductImage");
                 });
 #pragma warning restore 612, 618
         }

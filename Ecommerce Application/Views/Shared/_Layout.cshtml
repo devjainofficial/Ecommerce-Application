@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Ecommerce_Application.Repositories
+@inject ICategoryRepository _categoryService;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,24 +19,16 @@
     @* @ <script src="js/jQuery3.4.1.js"></script> @ *@
     <link rel="stylesheet" href="~/css/header.css">
     <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
+    <link rel="stylesheet" href="~/css/Profile_Dropdown.css">
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/footer.css">
-    <link rel="stylesheet" href="~/css/Login.css">
-@*     @ slider.html @
- *@        
+    <link rel="stylesheet" href="~/css/Login.css">       
     <link rel="stylesheet" href="~/css/index.css">
-    <link rel="stylesheet" href="~/css/Profile_Dropdown.css">
+    <link rel="stylesheet" href="~/css/ContentDetails.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
-
-
-    <!-- slider links -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" />
-
-   
 
 </head>
 <body>
@@ -48,22 +43,28 @@
                 <!-- MAIN CONTAINER -->
                 <div id="container">
                     <!-- SHOP NAME -->
-                    <div id="shopName"><a href="index.html"> <b>SHOP</b>LANE </a></div>
+                    <div id="shopName"><a href="/Home/Index"> <b>SHOP</b>LANE </a></div>
                     <!-- COLLCETIONS ON WEBSITE -->
                     <div id="collection">
                         <ul>
-                            <li><a href = "#">MEN</a>
-                                <ul>
-                                    <li><a href="#">MEN'S ACCESSORIES</a></li>
-                                    <li><a href="#">MEN'S CLOTHING</a></li>
-                                </ul>    
-                            </li>
-                            <li><a href = "#">WOMEN</a>
-                                <ul>
-                                    <li><a href="#">WOMEN'S ACCESSORIES</a></li>
-                                    <li><a href="#">WOMEN'S CLOTHING</a></li>
-                                </ul>
-                            </li>
+                            @{
+                                var categories = await _categoryService.GetAll();
+                                foreach (var category in categories)
+                                {
+                                    <li>
+                                        @if (category.ParentId == 0)
+                                        {
+                                            <a href="#">@category.Name</a>
+                                            <ul>    
+                                                @foreach (var subCategory in categories.Where(x => x.ParentId == category.CategoryId).ToList())
+                                                {
+                                                    <li><a href="/Category/ProductsByCategory/CategoryId=@subCategory.CategoryId">@subCategory.Name</a></li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            }
                         </ul>
                         
                     </div>
@@ -81,7 +82,7 @@
                             <div onclick="toggle()" class="fas fa-user-circle userIcon">
                                 
                             </div>
-                            <ul class="profile-dropdown-list">
+                            <ul style="padding-left:0rem;" class="profile-dropdown-list">
                                 <li class="profile-dropdown-list-item">
                                     <a href="/Home/Index">
                                         <i class="fa-regular fa-user"></i>
@@ -174,6 +175,7 @@
     <script src="/js/Profile_Dropdown.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Images", required: false)
 
 </body>
 </html>

@@ -12,12 +12,16 @@ namespace Ecommerce_Application
     public class Program
     {
         public static void Main(string[] args)
-        {
+     {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IProductCRUDRepository, ProductCRUDRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
             builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // For Identity, Mapping Services

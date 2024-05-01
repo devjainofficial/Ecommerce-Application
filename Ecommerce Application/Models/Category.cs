@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace Ecommerce_Application.Models
 {
@@ -7,7 +8,10 @@ namespace Ecommerce_Application.Models
         [Key]
         public int CategoryId { get; set; }
         public string Name { get; set; }
-        public int ParentId {  get; set; }
+        public int ParentId { get; set; }
+        public bool IsAccessories { get; set; }
+
+        [ValidateNever]
         public List<ProductDetails> ProductDetails { get; set; }
     }
 }

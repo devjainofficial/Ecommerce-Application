@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecommerce_Application.Models
 {
@@ -8,7 +10,8 @@ namespace Ecommerce_Application.Models
         public int ImageId { get; set; }
         public int ProductId { get; set; }
         public string ImagePath { get; set; }
-
-        public ProductDetails ProductDetails { get; set; }
+        [ForeignKey(nameof(ProductId))]
+        [ValidateNever]
+        public ProductDetails Product { get; set; }
     }
 }

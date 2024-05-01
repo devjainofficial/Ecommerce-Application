@@ -1,0 +1,42 @@
+﻿@model Ecommerce_Application.Models.ProductDetails
+@using Ecommerce_Application.Repositories
+@inject IProductImageRepository _productImageService;
+
+<div id="containerD">
+    <div id="imageSection">
+        <img id="imgDetails" src=@Model.ThumbImage>
+    </div>
+    <div id="productDetails">
+        <h1>@Model.ProductName</h1>
+        <h4>@Model.BrandName</h4>
+        <div id="details">
+            <del><h2>Rs. @Model.Price</h2></del>
+            <h3>Rs. @Model.SellingPrice</h3>
+            <h3>Description</h3>
+            <b><p>@Model.Description</p></b>
+        </div>
+        <div id="productPreview">
+            <h3>Product Preview</h3>
+            @{
+                var AllImage = await _productImageService.GetAllImagesById(Model.ProductId);
+                
+                    foreach (var images in AllImage)
+                    {
+                        <img id="previewImg" src="@images.ImagePath">
+                    }
+            }
+        </div>
+        <div id="button"><button>Add to Cart</button></div>
+    </div>
+</div>
+
+
+@section Images {
+    <script>
+        $(document).ready(function () {
+            $("#previewImg").click(function () {
+                $("#previewImg").hide();
+            });
+        });
+    </script>
+}
