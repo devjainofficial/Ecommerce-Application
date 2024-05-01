@@ -10,39 +10,17 @@ namespace Ecommerce_Application.Repositories
         {
             _context = context;
         }
-        public async Task<List<Category>> GetAll()
+
+        public async Task<List<ProductDetails>> GetAllProductsByCategoriesAsync(int id)
+        {
+            var product = await _context.ProductDetails.Where(c => c.CategoryId == id).ToListAsync();
+            return product;
+        }
+        public async Task<List<Category>> GetAllCategoriesAsync(int id)
         {
             return await _context.Categories.ToListAsync();
         }
 
-        public async Task<Category?> GetById(int id)
-        {
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            return category;
-        }
-        public void DeleteCategory(int id)
-        {
-            Category category = _context.Categories.Find(id);
-            _context.Categories.Remove(category);
-        }
-        public void InsertCategory(Category category)
-        {
-            _context.Categories.Add(category);
-        }
-        public void SaveChangesAsync()
-        {
-            _context.SaveChanges();
-        }
 
-        public void UpdateCategory(Category category)
-        {
-            _context.Update(category);
-        }
-
-        public bool CategoryExists(int id)
-        {
-            return _context.Categories.Any(e => e.CategoryId == id);
-        }
     }
 }

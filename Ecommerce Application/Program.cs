@@ -18,6 +18,7 @@ namespace Ecommerce_Application
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
+            builder.Services.AddScoped<ICategoryCRUDRepository, CategoryCRUDRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IProductCRUDRepository, ProductCRUDRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
