@@ -10,13 +10,14 @@
     <!-- <link rel="stylesheet" href="/style.css"> -->
     <title> E-COMMERCE WEBSITE BY DEV | CREATED BY DEV JAIN </title>
 
-      <!-- favicon -->
+    <!-- favicon -->
     <link rel="icon" href="https://yt3.ggpht.com/a/AGF-l78km1YyNXmF0r3-0CycCA0HLA_i6zYn_8NZEg=s900-c-k-c0xffffffff-no-rj-mo" type="image/gif" sizes="16x16">
     <!-- header links -->
     <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <!-- slider links -->
     @* @ <script src="js/jQuery3.4.1.js"></script> @ *@
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/header.css">
     <script src="https://kit.fontawesome.com/4a3b1f73a2.js"></script>
     <link rel="stylesheet" href="~/css/Profile_Dropdown.css">
@@ -24,7 +25,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/footer.css">
-    <link rel="stylesheet" href="~/css/Login.css">       
+    <link rel="stylesheet" href="~/css/Login.css">
     <link rel="stylesheet" href="~/css/index.css">
     <link rel="stylesheet" href="~/css/ContentDetails.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
@@ -54,8 +55,10 @@
                                     <li>
                                         @if (category.ParentId == 0)
                                         {
-                                            <a href="#">@category.Name</a>
-                                            <ul>    
+
+                                            // <a href="javascript:AllCategory();">@category.Name</a>
+                                            <a href="/Category/ProductsByCategory/?CategoryId=@category.CategoryId">@category.Name</a>
+                                            <ul>
                                                 @foreach (var subCategory in categories.Where(x => x.ParentId == category.CategoryId).ToList())
                                                 {
                                                     <li><a href="/Category/ProductsByCategory/?CategoryId=@subCategory.CategoryId">@subCategory.Name</a></li>
@@ -66,7 +69,7 @@
                                 }
                             }
                         </ul>
-                        
+
                     </div>
                     <!-- SEARCH SECTION -->
                     <div id="search">
@@ -80,7 +83,6 @@
                         <div class="profile-dropdown">
 
                             <div onclick="toggle()" class="fas fa-user-circle userIcon">
-                                
                             </div>
                             <ul style="padding-left:0rem;" class="profile-dropdown-list">
                                 <li class="profile-dropdown-list-item">
@@ -106,7 +108,7 @@
                                 <li class="profile-dropdown-list-item">
                                     <a href="/Account/Register">
                                         <i class="fa-solid fa-arrow-up-from-bracket"></i>
-                                       Register
+                                        Register
                                     </a>
                                 </li>
                             </ul>
@@ -168,7 +170,7 @@
 
 
     </footer>
-   
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
@@ -176,6 +178,24 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("Images", required: false)
+
+    @* <script>
+    function AllCategory() {
+    debugger;
+    var path = "/Category/ProductsByCategory/?";
+    var a = [3,4];
+
+    if (a.length > 0) {
+    debugger;
+    a.forEach(function (value) {
+    path += "CategoryId=" + value + "&";
+    });
+    }
+
+    var hostname = window.location.origin;
+    window.location.href = hostname + path;
+    };
+    </script> *@
 
 </body>
 </html>

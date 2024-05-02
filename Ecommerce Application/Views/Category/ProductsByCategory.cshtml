@@ -12,20 +12,24 @@
 </section>
 <div id="mainContainer">
     @{
+        int categoryId = ViewBag.CategoryId;
+    }
+    @{
 
-        var AllCategories = await _categoryService.GetAllCategoriesAsync(6);
+        var AllCategories = await _categoryService.GetAllCategoriesAsync(categoryId);
         @foreach (var category in AllCategories)
         {
-            @if (category.ParentId == category.)
+            @if (category.ParentId == categoryId)
             {
                 <h1> @category.Name </h1>
+                var SubCategories = await _categoryService.GetCategoriesDetailByIdAsync(category.CategoryId);
+                @if (SubCategories.Count == 0)
+                {
+                    <div id="containerClothing">
+                        @{
+                            var Products = await _categoryService.GetAllProductsByCategoriesAsync(category.CategoryId);
 
-                <div id="containerClothing">
-                    @{
-                        var MenClothingProducts = await _categoryService.GetAllProductsByCategoriesAsync(category.CategoryId);
-                        @if (category.ParentId == category.CategoryId)
-                        {
-                            @foreach (var product in MenClothingProducts)
+                            @foreach (var product in Products)
                             {
                                 <div id="box">
                                     <a href="/Product/ContentDetails/?ProductId=@product.ProductId">
@@ -34,22 +38,52 @@
                                         <div id="details">
                                             <h3>@product.ProductName</h3>
                                             <h4>@product.BrandName</h4>
-                                            <del><h2>Rs. @product.Price</h2></del>
-                                            <h3>Rs. @product.SellingPrice</h3>
+                                            <h2><sup>₹</sup>@product.SellingPrice</h2>
+                                            <del><h3>MRP @product.Price</h3></del>
                                         </div>
                                     </a>
                                 </div>
-
                             }
                         }
+                    </div>
+                }
+                else
+                {
+                    @foreach (var subcategory in SubCategories)
+                    {
+                        @if (subcategory.ParentId == category.CategoryId)
+                        {
+                            <h1> @subcategory.Name </h1>
+                            <div id="containerClothing">
+                                @{
+                                    var Products = await _categoryService.GetAllProductsByCategoriesAsync(subcategory.CategoryId);
+
+                                    @foreach (var product in Products)
+                                    {
+                                        <div id="box">
+                                            <a href="/Product/ContentDetails/?ProductId=@product.ProductId">
+
+                                                <img src="@product.ThumbImage" />
+                                                <div id="details">
+                                                    <h3>@product.ProductName</h3>
+                                                    <h4>@product.BrandName</h4>
+                                                    <h2><sup>₹</sup>@product.SellingPrice</h2>
+                                                    <del><h3>MRP @product.Price</h3></del>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
                     }
+                }
 
-
-                </div>
             }
         }
 
     }
+
 </div>
 @section Scripts {
     <script src="~/js/index.js"></script>

@@ -12,8 +12,21 @@ namespace Ecommerce_Application.Controllers
         }
         public async Task<IActionResult> ProductsByCategory(int CategoryId)
         {
+            ViewBag.CategoryId = CategoryId;
+            ViewData["CategoryId"] = CategoryId;
             var products = await _categoryRepository.GetAllProductsByCategoriesAsync(CategoryId);
             return View(products);
         }
+
+
+
+        /* [Route("Category/ProductsByCategory/{CategoryId}")]
+         public async Task<IActionResult> ProductsByCategory( int[] CategoryId)
+         {
+             ViewBag.CategoryId = CategoryId;
+             ViewData["CategoryId"] = CategoryId;
+             var products = await _categoryRepository.GetAllProductsByCategoriesAsync(CategoryId);
+             return View(products);
+         }*/
     }
 }
