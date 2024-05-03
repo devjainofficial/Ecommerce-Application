@@ -14,7 +14,8 @@ namespace Ecommerce_Application.Controllers
             _productRepository = productRepository;
             _productDetails = productDetails;
         }
-        public async Task<IActionResult> ContentDetails(int ProductId)
+        [Route("/Product/{ProductName}/{ProductId}")]
+        public async Task<IActionResult> ContentDetails(int ProductId, string ProductName)
         {
             var content = await _productDetails.GetById(Convert.ToInt32(ProductId));
             return View(content);

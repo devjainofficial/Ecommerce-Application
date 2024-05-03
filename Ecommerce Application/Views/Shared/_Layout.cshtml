@@ -56,12 +56,13 @@
                                         @if (category.ParentId == 0)
                                         {
 
-                                            // <a href="javascript:AllCategory();">@category.Name</a>
-                                            <a href="/Category/ProductsByCategory/?CategoryId=@category.CategoryId">@category.Name</a>
+                                            //<a href="/Category/ProductsByCategory/?CategoryId=@category.CategoryId">@category.Name</a>
+                                            <a href="/Category/@category.Name.Replace(' ', '-')/@category.CategoryId">@category.Name</a>
                                             <ul>
                                                 @foreach (var subCategory in categories.Where(x => x.ParentId == category.CategoryId).ToList())
                                                 {
-                                                    <li><a href="/Category/ProductsByCategory/?CategoryId=@subCategory.CategoryId">@subCategory.Name</a></li>
+                                                    // <li><a href="/Category/ProductsByCategory/?CategoryId=@subCategory.CategoryId">@subCategory.Name</a></li>
+                                                    <li><a href="/Category/@subCategory.Name.Replace(' ', '-')/@subCategory.CategoryId">@subCategory.Name</a></li>
                                                 }
                                             </ul>
                                         }
@@ -178,24 +179,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("Images", required: false)
-
-    @* <script>
-    function AllCategory() {
-    debugger;
-    var path = "/Category/ProductsByCategory/?";
-    var a = [3,4];
-
-    if (a.length > 0) {
-    debugger;
-    a.forEach(function (value) {
-    path += "CategoryId=" + value + "&";
-    });
-    }
-
-    var hostname = window.location.origin;
-    window.location.href = hostname + path;
-    };
-    </script> *@
 
 </body>
 </html>

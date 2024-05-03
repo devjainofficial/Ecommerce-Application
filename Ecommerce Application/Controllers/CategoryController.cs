@@ -1,4 +1,5 @@
-﻿using Ecommerce_Application.Repositories;
+﻿using Ecommerce_Application.Models;
+using Ecommerce_Application.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce_Application.Controllers
@@ -10,23 +11,15 @@ namespace Ecommerce_Application.Controllers
         {
             _categoryRepository = categoryRepository;
         }
-        public async Task<IActionResult> ProductsByCategory(int CategoryId)
+
+        [Route("/Category/{categoryName}/{CategoryId:int}")]
+        public async Task<IActionResult> ProductsByCategory(int CategoryId, string categoryName)
         {
             ViewBag.CategoryId = CategoryId;
-            ViewData["CategoryId"] = CategoryId;
-            var products = await _categoryRepository.GetAllProductsByCategoriesAsync(CategoryId);
-            return View(products);
-        }
+            ViewBag.CategoryName = categoryName; 
+           
+            return View();
+        }   
 
-
-
-        /* [Route("Category/ProductsByCategory/{CategoryId}")]
-         public async Task<IActionResult> ProductsByCategory( int[] CategoryId)
-         {
-             ViewBag.CategoryId = CategoryId;
-             ViewData["CategoryId"] = CategoryId;
-             var products = await _categoryRepository.GetAllProductsByCategoriesAsync(CategoryId);
-             return View(products);
-         }*/
     }
 }

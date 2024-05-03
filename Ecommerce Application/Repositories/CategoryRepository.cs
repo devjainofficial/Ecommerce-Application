@@ -23,7 +23,9 @@ namespace Ecommerce_Application.Repositories
         }
         public async Task<List<Category>> GetAllCategoriesAsync(int id)
         {
-            return await _context.Categories.ToListAsync();
+            var category =  await _context.Categories.ToListAsync();
+            
+            return category;
         }
          public async Task<List<Category>> GetCategoriesDetailByIdAsync(int id)
         {

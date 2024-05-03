@@ -23,9 +23,11 @@
                 @if (!@product.Category.IsAccessories)  
                 {
                     <div id="box">
-                        <a href="/Product/ContentDetails/?ProductId=@product.ProductId">
+                        <a href="/Product/@product.ProductName.Replace(" ", "-")/@product.ProductId">
 
-                            <img src="@product.ThumbImage" />
+                            <div id="thumbImage">
+                                <img src="@product.ThumbImage" />
+                            </div>  
                             <div id="details">
                                 <h3>@product.ProductName</h3>
                                 <h4>@product.BrandName</h4>
@@ -53,9 +55,12 @@
                 @if (@product.Category.IsAccessories)
                 {
                     <div id="box">
-                        <a href="/Product/ContentDetails/?ProductId=@product.ProductId">
-
-                            <img src="@product.ThumbImage" />
+                  
+                        <a href="/Product/@product.ProductName.Replace(" ", "-")/@product.ProductId">
+                            <div id="thumbImage">
+                                <img src="@product.ThumbImage" />
+                            </div>
+                            
                             <div id="details">
                                 <h3>@product.ProductName</h3>
                                 <h4>@product.BrandName</h4>

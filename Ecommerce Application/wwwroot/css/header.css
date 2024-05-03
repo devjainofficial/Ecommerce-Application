@@ -174,7 +174,7 @@ body {
 
 @media(max-width: 1090px) {
     #container {
-        display: grid;
+        display: flex;
         grid-template-columns: 1fr 2fr 0.5fr;
     }
 

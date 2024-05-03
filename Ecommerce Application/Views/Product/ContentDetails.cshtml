@@ -10,20 +10,20 @@
         <h1>@Model.ProductName</h1>
         <h4>@Model.BrandName</h4>
         <div id="details">
-            <del><h2>Rs. @Model.Price</h2></del>
-            <h3>Rs. @Model.SellingPrice</h3>
-            <h3>Description</h3>
-            <p>@Model.Description</p>
+            <h3>@Model.ProductName</h3>
+            <h4>@Model.BrandName</h4>
+            <h2><sup>₹</sup>@Model.SellingPrice</h2>
+            <del><h3>MRP @Model.Price</h3></del>
         </div>
         <div id="productPreview">
             <h3>Product Preview</h3>
             @{
                 var AllImage = await _productImageService.GetAllImagesById(Model.ProductId);
-                
-                    foreach (var images in AllImage)
-                    {
-                        <img id="previewImg" src="@images.ImagePath">
-                    }
+
+                foreach (var images in AllImage)
+                {
+                    <img class="previewImg" id="previewImg" src="@images.ImagePath">
+                }
             }
         </div>
         <div id="button"><button>Add to Cart</button></div>
@@ -33,10 +33,14 @@
 
 @section Images {
     <script>
+        debugger
         $(document).ready(function () {
-            $("#previewImg").click(function () {
-                $("#previewImg").hide();
+            $(".previewImg").click(function () {
+                var changeSrc = $(this).attr("src")
+                $("#imgDetails").attr("src", changeSrc);
             });
         });
+       
+
     </script>
 }
