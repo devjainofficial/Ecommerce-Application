@@ -9,5 +9,6 @@ namespace Ecommerce_Application.Repositories
         {
             _context = context;
         }
+
     }
 }

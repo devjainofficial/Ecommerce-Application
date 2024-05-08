@@ -16,6 +16,8 @@ namespace Ecommerce_Application.Models
         public int CategoryId { get; set; }
         public int SKU { get; set; }
         public string ThumbImage {  get; set; }
+        public DateTime ProductUploadTime { get; set; } = DateTime.Now;
+
         [ValidateNever]
         public List<ProductImage> ProductImages { get; set; }
         [ValidateNever]

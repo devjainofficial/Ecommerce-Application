@@ -13,8 +13,39 @@
 
 <div id="mainContainer">
 
+    <h1> Latest Products </h1>
+    <div class="responsive containerClothing">
+
+        @{
+            var latestProducts = await _productService.GetLatestProducts();
+            foreach (var product in latestProducts)
+            {
+                @if (@product.Category.IsAccessories || !@product.Category.IsAccessories)
+                {
+                    <div id="box">
+                        <a href="/Product/@product.ProductName.Replace(" ", "-")/@product.ProductId">
+
+                            <div id="thumbImage">
+                                <img src="@product.ThumbImage" />
+                            </div>  
+                            <div id="details">
+                                <h3>@product.ProductName</h3>
+                                <h4>@product.BrandName</h4>
+                                <h2><sup>₹</sup>@product.SellingPrice</h2>
+                                <del><h3>MRP @product.Price</h3></del>
+                            </div>
+
+                        </a>
+                    </div>
+                }
+            }
+
+        }
+
+    </div>
+    
     <h1> clothing for men and women </h1>
-    <div id="containerClothing">
+    <div class="responsive containerClothing">
 
         @{
             var clothingProducts = await _productService.GetAllDetails();
@@ -45,7 +76,7 @@
     </div>
 
     <h1> accessories for men and women </h1>
-    <div id="containerAccessories">
+    <div class="responsive containerAccessories">
 
 
         @{

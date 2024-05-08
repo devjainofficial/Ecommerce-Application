@@ -47,7 +47,18 @@ h1 {
     margin: auto;
     padding-bottom: 40px;
 }
-
+.containerClothing, .containerAccessories {
+    display: grid;
+    grid-gap: 100px 20px;
+    grid-template-columns: repeat(0, 1fr);
+    width: 90%;
+    margin: auto;
+    padding-bottom: 10px;
+    margin-bottom: 50px;
+}
+.slick-slide > div{
+    padding: 5px 10px;
+}
 #box {
     width: 100%;
     background-color: white;
@@ -59,11 +70,13 @@ h1 {
         box-shadow: 1px 6px 3px 0 rgb(185, 185, 185);
     }
 
+
 #thumbImage {
     height: 289px;
     display: flex;
     justify-content: center;
 }
+
 #containerClothing img {
     width: 100%;
     border-top-left-radius: 10px;
@@ -75,8 +88,19 @@ h1 {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+.containerClothing img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
 
-#details {  
+.containerAccessories img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#details {
     padding: 0 15px;
     text-transform: capitalize;
 }
@@ -101,16 +125,15 @@ h2 {
 /*/ ----------------------------- MEDIA QUERY --------------------------- /*/
 
 @media(max-width: 1070px) {
-    h1
+    h1 {
+        font-size: 25px;
+    }
 
-{
-    font-size: 25px;
-}
+    #containerClothing, #containerAccessories {
+        width: 95%;
+        grid-gap: 10px;
+    }
 
-#containerClothing, #containerAccessories {
-    width: 95%;
-    grid-gap: 10px;
-}
     #thumbImage {
         height: 159px;
         display: flex;
