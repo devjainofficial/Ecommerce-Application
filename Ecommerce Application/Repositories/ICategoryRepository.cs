@@ -8,6 +8,6 @@ namespace Ecommerce_Application.Repositories
         Task<List<ProductDetails>> GetAllProductsAsync(int id);
         Task<List<Category>> GetAllCategoriesAsync(int id);
         Task<List<Category>> GetCategoriesDetailByIdAsync(int id);
-        /*Task<List<ProductDetails>> GetAllProductsByCategoriesAsync(int[] categoryId);*/
+        List<Banner> BannerImage(string name);
     }
 }

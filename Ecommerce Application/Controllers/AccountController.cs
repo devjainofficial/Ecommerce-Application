@@ -15,8 +15,9 @@ namespace Ecommerce_Application.Controllers
             this.authService = authService;
         }
         [HttpGet]
-/*        [Authorize(Roles ="Admin")]
-*/        public async Task<IActionResult> Register()
+        /*        [Authorize(Roles ="Admin")]
+        */
+        public async Task<IActionResult> Register()
         {
             return View();
         }
@@ -53,13 +54,19 @@ namespace Ecommerce_Application.Controllers
             var result = await authService.LoginAsync(login);
             if (result.StatusCode == 1)
             {
-                var token =  await authService.GenerateToken(login);
+                var token = await authService.GenerateToken(login);
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                 ViewBag.TokenString = tokenString;
                 return Ok(tokenString);
 
             }
             return BadRequest();
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await authService.LogoutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

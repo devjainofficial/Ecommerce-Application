@@ -1,4 +1,5 @@
 ﻿using Ecommerce_Application.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce_Application.Repositories
 {
@@ -8,7 +9,8 @@ namespace Ecommerce_Application.Repositories
         public ProductRepository(DBContext context)
         {
             _context = context;
+           
         }
-
+        
     }
 }

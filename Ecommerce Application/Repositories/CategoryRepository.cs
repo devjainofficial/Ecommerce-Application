@@ -6,9 +6,11 @@ namespace Ecommerce_Application.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly DBContext _context;
-        public CategoryRepository(DBContext context)
+        private Microsoft.AspNetCore.Hosting.IHostingEnvironment Environment;
+        public CategoryRepository(DBContext context, Microsoft.AspNetCore.Hosting.IHostingEnvironment _environment)
         {
             _context = context;
+            Environment = _environment;
         }
 
         public async Task<List<ProductDetails>> GetAllProductsByCategoriesAsync(int id)
@@ -31,18 +33,21 @@ namespace Ecommerce_Application.Repositories
         {
             return await _context.Categories.Where(c => c.ParentId == id).ToListAsync();
         }
-        
 
-
-       /* List<ProductDetails> product = new List<ProductDetails>();
-        public async Task<List<ProductDetails>> GetAllProductsByCategoriesAsync(int[] categoryId)
+        public List<Banner> BannerImage(string name)
         {
-            foreach(var category in categoryId)
-            {
+            //Fetch all files in the Folder (Directory).
+            string[] filePaths = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, "img/"+name));
 
-            product = await _context.ProductDetails.Where(c => c.CategoryId == category).ToListAsync();
+            //Copy File names to Model collection.
+            List<Banner> files = new List<Banner>();
+            foreach (string filePath in filePaths)
+            {
+                files.Add(new Banner { FileName = Path.GetFileName(filePath) });
             }
-            return product;
-        }*/
+
+            return files;
+        }
+
     }
 }

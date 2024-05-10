@@ -90,7 +90,7 @@ namespace Ecommerce_Application.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ThumbImage,ProductId,ProductName,Price,SellingPrice,Description,BrandName,CategoryId,SKU")] ProductDetails productDetails)
+        public async Task<IActionResult> Edit(int id, [Bind("ThumbImage,ProductId,ProductName,Price,SellingPrice,Description,BrandName,CategoryId,SKU,ProductUploadTime")] ProductDetails productDetails)
         {
             if (id != productDetails.ProductId)
             {
@@ -101,7 +101,11 @@ namespace Ecommerce_Application.Controllers
             {
                 try
                 {
-                    _context.Update(productDetails);
+                    /*var product = await _context.ProductDetails.FindAsync(id);
+                    var UpdateDetails = product.ProductUploadTime;
+                    productDetails.ProductUploadTime = UpdateDetails;
+                   */
+                   _context.Update(productDetails);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

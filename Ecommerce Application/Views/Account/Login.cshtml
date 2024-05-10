@@ -1,26 +1,28 @@
 ﻿@model Ecommerce_Application.Models.Login
 
-
 <div class="wrapper">
-    
     <div class="text-center mt-4 name">
         Login
     </div>
-   
-    <form id="LoginForm" class="p-3 mt-3">
+
+    <form id="LoginForm" class="p-3 mt-3" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
         <div class="form-field d-flex align-items-center">
             <span asp-validation-for="Username" class="far fa-user"></span>
-            <input asp-for="Username" type="text" name="userName" id="userName" placeholder="Username" />
+            <input asp-for="Username" type="text" name="userName" id="userName" placeholder="Username" required autocomplete="off" />
         </div>
+            <span id="userNameError" asp-validation-for="Username" class="text-danger"></span>
+
         <div class="form-field d-flex align-items-center">
             <span asp-validation-for="Password" class="fas fa-key"></span>
-            <input asp-for="Password" type="password" id="pwd" placeholder="Password" />
+            <input asp-for="Password" type="password" id="pwd" placeholder="Password" required />
         </div>
+            <span id="passwordError" asp-validation-for="Password" class="text-danger"></span>
+
         </br>
         <div class="form-group d-flex justify-content-center align-items-center row">
-            <input type="button" value="Login" id="loginbtn" class="btn mt-3" />
+            <input type="submit" value="Login" id="loginbtn" class="btn mt-3" />
         </div>
     </form>
     <div class="text-center fs-6">
@@ -28,49 +30,69 @@
     </div>
 </div>
 
-
-
 @section Scripts {
     <script>
-        $('#loginbtn').on('click', (function (e) {
-            debugger
-            e.preventDefault();
-            var Uname = $("#Username").val();
-            var password = $("#Password").val();
-
-            var obj = {}
-            obj.Uname = Uname;
-            obj.password = password
-            AfterSubmit(obj);
-        }));
-
-        function AfterSubmit(obj) {
-
-            $.ajax({
-                url: '@Url.Action("Login", "Account")',
-                method: 'POST',
-                data: obj,
-                datatype: 'html',
-                success: function (data) {
-                    console.log('Submission was successful.');
-                    alert("You logged in Successfully", data.Uname)
-                    window.location.href = '/Home/index'
-                },
-                error: function (error) {
-                    console.log('An error occurred.');
-                    console.log(error);
+        $(document).ready(function () {
+            $('#LoginForm').submit(function (e) {
+                e.preventDefault();
+                if (validateForm()) {
+                    var Uname = $("#userName").val();
+                    var password = $("#pwd").val();
+                    var obj = {
+                        Username: Uname,
+                        Password: password
+                    };
+                    AfterSubmit(obj);
                 }
             });
-        }
+
+            function validateForm() {
+                var isValid = true;
+                $('.text-danger').text('');
+
+                var username = $('#userName').val().trim();
+                if (username === '') {
+                    $('#userName').next('.text-danger').text('Username is required.');
+                    isValid = false;
+                }
+
+                var password = $('#pwd').val().trim();
+                if (password === '') {
+                    $('#pwd').next('.text-danger').text('Password is required.');
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            function AfterSubmit(obj) {
+                $.ajax({
+                    url: '@Url.Action("Login", "Account")',
+                    method: 'POST',
+                    data: obj,
+                    datatype: 'html',
+                    success: function (data) {
+                        console.log('Submission was successful.');
+                        // alert("You logged in Successfully", data.Uname)
+                        window.location.href = '/Home/index';
+                    },
+                    error: function (error) {
+                        console.log('An error occurred.');
+                        console.log(error);
+                    }
+                });
+            }
+        });
     </script>
 }
+
 @section Blank2 {
     @{
-        
+
     }
 }
 @section Blank {
     @{
-        
+
     }
 }

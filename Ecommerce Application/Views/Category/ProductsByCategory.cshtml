@@ -6,29 +6,41 @@
     string categoryName = ViewBag.CategoryName;
     int categoryId = ViewBag.CategoryId;
 }
+@if (categoryId == 1 || categoryId == 2 || categoryId == 7)
+{
 
-<section>
-    @if (categoryId == 1 || categoryId == 2 || categoryId == 7)  
-    {   
-    <div id="containerSlider">
-        <div id="slidingImage"> <img src="~/img/@categoryName/img(1).jpg" alt="image1" loading="eager"> </div>
-        <div id="slidingImage"> <img src="~/img/@categoryName/img(2).jpg" alt="image2" loading="eager"> </div>
-        <div id="slidingImage"> <img src="~/img/@categoryName/img(3).jpg" alt="image3" loading="eager"> </div>
-        <div id="slidingImage"> <img src="~/img/@categoryName/img(4).jpg" alt="image4" loading="eager"> </div>
+    <section>
+        @{
+            var BannerImage = _categoryService.BannerImage(categoryName);
+        }
+        <div id="containerSlider">
+            @foreach (Banner file in BannerImage)
+            {
+                <div id="slidingImage"> <img src="/img/@categoryName/@file.FileName" alt="image1" loading="eager"> </div>
+            }
         </div>
-    }
-    else
+        @*    @if (categoryId == 1 || categoryId == 2 || categoryId == 7)
     {
-        <h1></h1>
+    <div id="containerSlider">
+    <div id="slidingImage"> <img src="~/img/@categoryName/img(1).jpg" alt="image1" loading="eager"> </div>
+    <div id="slidingImage"> <img src="~/img/@categoryName/img(2).jpg" alt="image2" loading="eager"> </div>
+    <div id="slidingImage"> <img src="~/img/@categoryName/img(3).jpg" alt="image3" loading="eager"> </div>
+    <div id="slidingImage"> <img src="~/img/@categoryName/img(4).jpg" alt="image4" loading="eager"> </div>
+    </div>
     }
-</section>
-
+    *@
+    </section>
+}
+else
+{
+    <h1></h1>
+}
 <div id="mainContainer">
-  
+
     @{
 
         var AllCategories = await _categoryService.GetAllCategoriesAsync(categoryId);
-        
+
         @foreach (var category in AllCategories)
         {
             @if (category.ParentId == categoryId)

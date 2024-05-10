@@ -38,9 +38,13 @@
             $(".previewImg").click(function () {
                 var changeSrc = $(this).attr("src")
                 $("#imgDetails").attr("src", changeSrc);
+                $('.selected').removeClass('selected');
+                $(this).addClass('selected');
+
             });
         });
        
 
     </script>
 }
+
