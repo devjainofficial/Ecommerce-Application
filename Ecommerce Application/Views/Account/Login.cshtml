@@ -1,4 +1,5 @@
 ﻿@model Ecommerce_Application.Models.Login
+<body style="background-image: url('../img/login/arrangement-black-friday-shopping-carts-with-copy-space.jpg');">
 
 <div class="wrapper">
     <div class="text-center mt-4 name">
@@ -8,17 +9,19 @@
     <form id="LoginForm" class="p-3 mt-3" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <div style="color:white">Username</div>
         <div class="form-field d-flex align-items-center">
-            <span asp-validation-for="Username" class="far fa-user"></span>
-            <input asp-for="Username" type="text" name="userName" id="userName" placeholder="Username" required autocomplete="off" />
+            <span asp-validation-for="Username" class="fas fa-user"></span>
+            <input asp-for="Username" type="text" name="userName" id="userName" autocomplete="off" />
         </div>
-            <span id="userNameError" asp-validation-for="Username" class="text-danger"></span>
+            <h6 id="userNameError" asp-validation-for="Username" ></h6>
 
+        <div style="color:white">Password</div>
         <div class="form-field d-flex align-items-center">
             <span asp-validation-for="Password" class="fas fa-key"></span>
-            <input asp-for="Password" type="password" id="pwd" placeholder="Password" required />
+            <input asp-for="Password" type="password" id="pwd"  autocomplete="off" />
         </div>
-            <span id="passwordError" asp-validation-for="Password" class="text-danger"></span>
+            <h6 id="passwordError" asp-validation-for="Password"></h6>
 
         </br>
         <div class="form-group d-flex justify-content-center align-items-center row">
@@ -29,6 +32,7 @@
         <a href="/Account/Register" class="d-flex justify-content-center row">Sign up</a>
     </div>
 </div>
+</body>
 
 @section Scripts {
     <script>
@@ -36,7 +40,7 @@
             $('#LoginForm').submit(function (e) {
                 e.preventDefault();
                 if (validateForm()) {
-                    var Uname = $("#userName").val();
+                    var Uname = $("#userName").val();   
                     var password = $("#pwd").val();
                     var obj = {
                         Username: Uname,
@@ -48,18 +52,33 @@
 
             function validateForm() {
                 var isValid = true;
-                $('.text-danger').text('');
 
                 var username = $('#userName').val().trim();
                 if (username === '') {
-                    $('#userName').next('.text-danger').text('Username is required.');
+                    $('#userNameError').show();
+                    $('#userNameError').text('Username is required.');
                     isValid = false;
                 }
-
+                else {
+                    $('#userNameError').hide();
+                    isValid = true;
+                }
+                var pattern = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/;
                 var password = $('#pwd').val().trim();
                 if (password === '') {
-                    $('#pwd').next('.text-danger').text('Password is required.');
+                    $('#passwordError').text('Password is required.');
                     isValid = false;
+                }
+                else if (!pattern.test(password)) {
+                    $('#passwordError').show();
+                    $('#passwordError').html("Valid password: Atleast, 1 digit, 1 lowercase, 1 uppercase, 1 special, 8-16 chars.");
+                    $('#passwordError').focus();
+                    $('#passwordError').css("color", "black");
+                    isValid = false;
+
+                } else {
+                    $('#passwordError').hide();
+                    isValid = true;
                 }
 
                 return isValid;

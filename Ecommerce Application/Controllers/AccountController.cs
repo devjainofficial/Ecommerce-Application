@@ -34,7 +34,7 @@ namespace Ecommerce_Application.Controllers
                 Role = registration.Role
             };
             var result = await authService.RegisterAsync(registration);
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         [HttpGet]
@@ -54,10 +54,12 @@ namespace Ecommerce_Application.Controllers
             var result = await authService.LoginAsync(login);
             if (result.StatusCode == 1)
             {
+                HttpContext.Session.SetString("UserName", login.Username);
                 var token = await authService.GenerateToken(login);
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                 ViewBag.TokenString = tokenString;
-                return Ok(tokenString);
+                var obj = new { statusCode = result.StatusCode, message = result.Message, tokenString = tokenString };
+                return Ok(obj);
 
             }
             return BadRequest();

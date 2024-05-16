@@ -17,6 +17,8 @@ namespace Ecommerce_Application
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
             builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
             builder.Services.AddScoped<ICategoryCRUDRepository, CategoryCRUDRepository>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -24,6 +26,7 @@ namespace Ecommerce_Application
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
             builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // For Identity, Mapping Services
             builder.Services.AddIdentity<User, IdentityRole>()
@@ -53,7 +56,7 @@ namespace Ecommerce_Application
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -63,7 +66,7 @@ namespace Ecommerce_Application
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id:int?}");
 
             app.Run();
         }
