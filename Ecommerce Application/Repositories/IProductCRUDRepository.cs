@@ -7,5 +7,9 @@ namespace Ecommerce_Application.Repositories
         Task<List<ProductDetails>> GetAllDetails();
         Task<List<ProductDetails>> GetLatestProducts();
         Task<ProductDetails?> GetById(int id);
+       /*
+            IList
+    IQueryable 
+            ICollection*/
     }
 }

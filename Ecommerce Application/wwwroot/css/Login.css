@@ -10,13 +10,18 @@
 }
 
 body {
-    background: #fff;
+    background: #000;
     
     background-size:cover;
 }
+#registerWrapper {
+    max-width: 510px;
+    width: 1180px;
+    min-height: 650px;
+}
 
 .wrapper {
-    max-width: 500px;
+    max-width: 450px;
     min-height: 460px;
     margin: auto auto;
     padding: 20px 40px 0px 40px;
@@ -28,12 +33,12 @@ body {
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background: rgba(245, 245, 245, 0.25);
+    background: rgba(45, 45, 45, 1);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 
@@ -53,20 +58,20 @@ body {
     background: none;
     font-size: 1.2rem;
     color: #fff;
-    padding: 10px 15px 10px 10px;
+    padding: 0px;
     /* border: 1px solid red; */
 }
 
 .wrapper .form-field {
     padding-left: 10px;
     margin-bottom: 20px;
-    border-radius: 20px;
-    box-shadow: inset 8px 8px 8px #cbced1, inset -5px -5px 5px #cbced1;
+    border-bottom: 2px solid white;
+    /*box-shadow: inset 8px 8px 8px #cbced1, inset -5px -5px 5px #cbced1;*/
 }
 
     .wrapper .form-field .fas {
         color: #ffffff;
-        padding-left: 10px;
+        padding: 10px 10px;
     }
 
 .wrapper .btn {
@@ -93,7 +98,9 @@ body {
     .wrapper a:hover {
         color: #039BE5;
     }
-
+#rememberMe{
+    padding: 20px 0px;
+}
 
 @media(max-width: 380px) {
     .wrapper {

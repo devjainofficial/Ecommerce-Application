@@ -1,37 +1,44 @@
 ﻿@model Ecommerce_Application.Models.Login
 <body style="background-image: url('../img/login/arrangement-black-friday-shopping-carts-with-copy-space.jpg');">
 
-<div class="wrapper">
-    <div class="text-center mt-4 name">
-        Login
-    </div>
+    <div class="wrapper">
+        <div class="text-center mt-4 name">
+            Login
+        </div>
 
-    <form id="LoginForm" class="p-3 mt-3" method="post">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form id="LoginForm" class="p-3 mt-3" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
+            <h6 id="userNameError" asp-validation-for="Username"></h6>
             <div style="color:white">Username</div>
-        <div class="form-field d-flex align-items-center">
-            <span asp-validation-for="Username" class="fas fa-user"></span>
-            <input asp-for="Username" type="text" name="userName" id="userName" autocomplete="off" />
-        </div>
-            <h6 id="userNameError" asp-validation-for="Username" ></h6>
+            <div class="form-field d-flex align-items-center">
+                <span asp-validation-for="Username" class="fas fa-user"></span>
+                <input asp-for="Username" type="text" name="userName" id="userName" />
+            </div>
 
-        <div style="color:white">Password</div>
-        <div class="form-field d-flex align-items-center">
-            <span asp-validation-for="Password" class="fas fa-key"></span>
-            <input asp-for="Password" type="password" id="pwd"  autocomplete="off" />
-        </div>
             <h6 id="passwordError" asp-validation-for="Password"></h6>
+            <div style="color:white">Password</div>
+            <div class="form-field d-flex align-items-center">
+                <span asp-validation-for="Password" class="fas fa-key"></span>
+                <input asp-for="Password" type="password" id="pwd" />
+            </div>
 
-        </br>
-        <div class="form-group d-flex justify-content-center align-items-center row">
-            <input type="submit" value="Login" id="loginbtn" class="btn mt-3" />
+            </br>
+            <div class="form-group d-flex justify-content-center align-items-center row">
+                <input type="submit" value="Login" id="loginbtn" class="btn mt-3" />
+            </div>
+            <div class="form-group d-flex" style="color:white" id="rememberMe">
+                <input type="checkbox" style="margin-right: 20px;" />
+                Remember Me
+            </div>
+
+
+        </form>
+        <div class="text-center fs-6" style="color:white">
+            Don't have Account?
+            <h3><a href="/Account/Register" class="d-flex justify-content-center row">Sign up</a></h3>
         </div>
-    </form>
-    <div class="text-center fs-6">
-        <a href="/Account/Register" class="d-flex justify-content-center row">Sign up</a>
     </div>
-</div>
 </body>
 
 @section Scripts {
@@ -40,7 +47,7 @@
             $('#LoginForm').submit(function (e) {
                 e.preventDefault();
                 if (validateForm()) {
-                    var Uname = $("#userName").val();   
+                    var Uname = $("#userName").val();
                     var password = $("#pwd").val();
                     var obj = {
                         Username: Uname,
@@ -57,6 +64,8 @@
                 if (username === '') {
                     $('#userNameError').show();
                     $('#userNameError').text('Username is required.');
+                    $('#userNameError').css("color", "red");
+                    $('#userNameError').css("font-weight", "bold");
                     isValid = false;
                 }
                 else {
@@ -67,13 +76,16 @@
                 var password = $('#pwd').val().trim();
                 if (password === '') {
                     $('#passwordError').text('Password is required.');
+                    $('#passwordError').css("color", "red");
+                    $('#passwordError').css("font-weight", "bold");
                     isValid = false;
                 }
                 else if (!pattern.test(password)) {
                     $('#passwordError').show();
                     $('#passwordError').html("Valid password: Atleast, 1 digit, 1 lowercase, 1 uppercase, 1 special, 8-16 chars.");
                     $('#passwordError').focus();
-                    $('#passwordError').css("color", "black");
+                    $('#passwordError').css("color", "red");
+                    $('#passwordError').css("font-weight", "bold");
                     isValid = false;
 
                 } else {
@@ -92,6 +104,8 @@
                     datatype: 'html',
                     success: function (data) {
                         console.log('Submission was successful.');
+                        // debugger
+                        // localStorage.setItem('UserName', data.Username);
                         // alert("You logged in Successfully", data.Uname)
                         window.location.href = '/Home/index';
                     },

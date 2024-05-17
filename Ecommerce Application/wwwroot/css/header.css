@@ -14,7 +14,7 @@ body {
 }
 
 #container {
-    background-color: white;
+    background-color: rgb(10, 10, 10);
     margin: auto;
     text-align: center;
     width: 100%;
@@ -26,17 +26,19 @@ body {
     padding: 15px 40px;
     box-sizing: border-box;
     position: fixed;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(60, 64, 67, 0.149);
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.302), 0 2px 6px 2px rgba(240, 240, 240, 0.25);
+
 }
 
 #shopName {
     font-size: 40px;
     font-family: 'Lato', sans-serif;
+    
 }
 
     #shopName a {
         text-decoration: none;
-        color: rgb(29, 29, 29);
+        color: rgb(255 255 255);
     }
 
     #shopName > b {
@@ -71,11 +73,12 @@ body {
                 text-decoration: none;
                 color: black;
                 justify-content: space-between;
+                color: rgb(255 255 255);
             }
 
                 #collection ul li a:hover {
-                    background: rgb(250, 255, 255);
-                    background-color: rgb(200, 200, 200);
+                    background: white;
+                    background-color: rgba(60, 64, 67);
                 }
 
             #collection ul li ul {
@@ -92,7 +95,7 @@ body {
             #collection ul li:hover ul {
                 display: block;
                 border-radius: 10px;
-                background-color: white;
+                background-color: black;
             }
 
             #collection ul li ul li {
@@ -123,6 +126,7 @@ body {
 
 .userIcon {
     font-size: 45px;
+    color: rgb(255 255 255);
 }
 
 #input {
@@ -143,7 +147,7 @@ body {
     }
 
 #user a {
-    color: rgb(29, 29, 29)
+    color: rgb(255 255 255);
 }
 
 /* ----------------------------- MEDIA QUERY --------------------------- */

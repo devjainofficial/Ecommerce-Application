@@ -5,7 +5,7 @@
 }
 <body style="background-image: url('../img/login/register.jpg');">
 
-<div class="wrapper" style="overflow:hidden">
+<div class="wrapper" id="registerWrapper" style="overflow:hidden">
     <div class="text-center mt-4 name">
         Register
     </div>
@@ -13,41 +13,41 @@
         <div asp-validation-summary="ModelOnly"></div>
 
         <span asp-validation-for="Name" id="NameError"></span>
-        <div style="color:white">Name</div>
+            <div style="color:#fff">Name</div>
         <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Name" id="Name" type="text"  autocomplete="off" />
+            <input asp-for="Name" id="Name" type="text" autocomplete="off" />
         </div>
 
         <span asp-validation-for="Username" id="UserNameError"></span>
-        <div style="color:white">Username</div>
+            <div style="color:#fff">Username</div>
         <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Username" id="UserName" type="text"  autocomplete="off" />
+                <input asp-for="Username" id="UserName" type="text"  autocomplete="off" />
         </div>
 
         <span asp-validation-for="Email" id="EmailError"></span>
-        <div style="color:white">Email</div>
+            <div style="color:#fff">Email</div>
         <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Email" id="Email" type="email"  autocomplete="off" />
+                <input asp-for="Email" id="Email" type="email"  autocomplete="off" />
         </div>
 
         <span asp-validation-for="Password" id="PasswordError"></span>
-        <div style="color:white">Password</div>
+            <div style="color:#fff">Password</div>
         <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Password" id="Password" type="password"  autocomplete="off" />
+                <input asp-for="Password" id="Password" type="password" autocomplete="off" />
         </div>
 
         <span asp-validation-for="PasswordConfirm" id="ConfirmPasswordError"></span>
-        <div style="color:white">Confirm Password</div>
+        <div style="color:#fff">Confirm Password</div>
         <div class="form-field d-flex align-items-center">
 
             <input asp-for="PasswordConfirm" id="ConfirmPassword" type="password"  autocomplete="off" />
         </div>
 
-        <div class="form-field d-flex align-items-center">
+            <div class="form-field d-flex align-items-center" style="display:none !important">
 
             <input asp-for="Role" type="hidden" placeholder="Role" value="User" />
             <span asp-validation-for="Role"></span>
@@ -58,6 +58,9 @@
             <input type="submit" id="SubmitButton" value="Register" class="btn btn-primary" />
         </div>
     </form>
+        <div class="text-center fs-6" style="color:#fff;">Already have an account?
+            <h4><a href="/Account/Login" class="d-flex justify-content-center row">Click here</a></h4>
+        </div>
 </div>
 </body>
 @section Scripts {
@@ -102,7 +105,9 @@
                     $('#NameError').show();
                     $('#NameError').html("Please Enter correct Name");
                     $('#NameError').focus();
-                    $('#NameError').css("color", "white");
+                    $('#NameError').css("color", "red");
+                    $('#NameError').css("font-weight", "bold");
+
                     Name_Error = false;
                     return false;
                 }
@@ -120,7 +125,8 @@
                     $('#UserNameError').show();
                     $('#UserNameError').html("Please Enter correct Username");
                     $('#UserNameError').focus();
-                    $('#UserNameError').css("color", "white");
+                    $('#UserNameError').css("color", "red");
+                    $('#UserNameError').css("font-weight", "bold");
                     UserName_Error = false;
                     return false;
                 }
@@ -134,7 +140,8 @@
                     $('#UserNameError').show();
                     $('#UserNameError').html("Please Enter Username Length more than 3");
                     $('#UserNameError').focus();
-                    $('#UserNameError').css("color", "white");
+                    $('#UserNameError').css("color", "red");
+                    $('#UserNameError').css("font-weight", "bold");
                     UserName_Error = false;
                     return false;
                 }
@@ -153,7 +160,8 @@
                     $('#EmailError').show();
                     $('#EmailError').html("Please Enter correct Email");
                     $('#EmailError').focus();
-                    $('#EmailError').css("color", "white");
+                    $('#EmailError').css("color", "red");
+                    $('#EmailError').css("font-weight", "bold");
                     Email_Error = false;
                     return false;
                 }
@@ -167,7 +175,8 @@
                     $('#EmailError').show();
                     $('#EmailError').html("Please Enter correct Email address");
                     $('#EmailError').focus();
-                    $('#EmailError').css("color", "white");
+                    $('#EmailError').css("color", "red");
+                    $('#EmailError').css("font-weight", "bold");
                     Email_Error = false;
                     return false;
                 }
@@ -185,7 +194,8 @@
                     $('#PasswordError').show();
                     $('#PasswordError').html("Please Enter correct Password");
                     $('#PasswordError').focus();
-                    $('#PasswordError').css("color", "white");
+                    $('#PasswordError').css("color", "red");
+                    $('#PasswordError').css("font-weight", "bold");
                     Password_Error = false;
                     return false;
                 }
@@ -198,7 +208,8 @@
                     $('#PasswordError').show();
                     $('#PasswordError').html("Valid password: Atleast, 1 digit, 1 lowercase, 1 uppercase, 1 special, 8-16 chars.");
                     $('#PasswordError').focus();
-                    $('#PasswordError').css("color", "white");
+                    $('#PasswordError').css("color", "red");
+                    $('#PasswordError').css("font-weight", "bold");
                     Password_Error = false;
                     return false;
                 }
@@ -217,7 +228,8 @@
                     $('#ConfirmPasswordError').show();
                     $('#ConfirmPasswordError').html("Password are not Matching");
                     $('#ConfirmPasswordError').focus();
-                    $('#ConfirmPasswordError').css("color", "white");
+                    $('#ConfirmPasswordError').css("color", "red");
+                    $('#ConfirmPasswordError').css("font-weight", "bold");
                     ConfirmPassword_Error = false;
                     return false;
                 }
@@ -285,8 +297,11 @@
                             debugger
                             //alert("Registeration done");
                             console.log('Registration was successful.');
+                            debugger
+                            localStorage.setItem('UserName', obj.Username);
+                            localStorage.setItem('Password', obj.Password);
                             swal.fire(
-                                'goodjob',
+                                'Congratulations',
                                 result.message,
                                 'success'
                                                             

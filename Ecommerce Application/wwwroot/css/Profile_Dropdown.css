@@ -40,7 +40,7 @@ body {
     top: 68px;
     width: 220px;
     right: 0;
-    background-color: var(--white);
+    background-color: var(--black);
     border-radius: 10px;
     max-height: 0;
     overflow: hidden;

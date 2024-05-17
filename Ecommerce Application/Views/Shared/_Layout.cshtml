@@ -62,7 +62,6 @@
                                             <ul>
                                                 @foreach (var subCategory in categories.Where(x => x.ParentId == category.CategoryId).ToList())
                                                 {
-                                                   
                                                     // <li><a href="/Category/ProductsByCategory/?CategoryId=@subCategory.CategoryId">@subCategory.Name</a></li>
                                                     <li><a href="/Category/@subCategory.Name.Replace(' ', '-')/@subCategory.CategoryId">@subCategory.Name</a></li>
                                                 }
