@@ -1,0 +1,80 @@
+﻿#profile {
+    padding-top: 130px;
+}
+
+#account {
+    padding: 0px 25px 25px 25px;
+    background-color: #1a1313;
+    border-radius: 15px;
+}
+
+#account-heading {
+    padding: 25px 0 10px 0;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    width: 0%;
+}
+
+#sidebar {
+    padding: 25px 0px 25px 0px;
+    float: left;
+    width: 30%;
+    height: 30rem;
+}
+
+    #sidebar > div {
+        background-color: #1a1313;
+        width: 100%;
+        padding: 25px;
+    }
+
+#overview, #order, #credit-details, #account-options {
+    border-bottom: 1px solid aqua;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    width: 0%;
+}
+
+#userinfo {
+    padding: 25px 25px 5px 25px;
+    float: left;
+    width: 70%;
+}
+
+    #userinfo > div {
+        background-color: #1a1313;
+        width: 100%;
+        padding: 25px;
+    }
+
+#userIcon {
+    background-color: #282828;
+    border: 1px solid black;
+    padding: 25px;
+}
+
+#userName {
+    display: inline-block;
+    color: white;
+    padding-left: 20px;
+    font-size: 1rem;
+}
+
+#bottom-box {
+    display: flex;
+    padding: 5px 25px 25px 25px;
+    float: left;
+    width: 70%;
+}
+
+    #bottom-box > div {
+        text-align: center;
+        color:white;
+        margin-right: 10px;
+        background-color: #1a1313;
+        width: 100%;
+        padding: 25px;
+        height: 150px;
+    }

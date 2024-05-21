@@ -230,73 +230,73 @@ body {
 
 @media(max-width: 1480px) {
     #badge {
-        right: 150px;
+        right: 100px;
     }
 }
 
 @media(max-width: 1426px) {
     #badge {
-        right: 142px;
+        right: 90px;
     }
 }
 
 @media(max-width: 1360px) {
     #badge {
-        right: 136px;
+        right: 84px;
     }
 }
 
 @media(max-width: 1320px) {
     #badge {
-        right: 129px;
+        right: 78px;
     }
 }
 
 @media(max-width: 1259px) {
     #badge {
-        right: 119px;
+        right: 90px;
     }
 }
 
 @media(max-width: 1212px) {
     #badge {
-        right: 96px;
+        right:80px;
     }
 }
 
 @media(max-width: 1155px) {
     #badge {
-        right: 87px;
+        right:85px;
     }
 }
 
 @media(max-width: 1090px) {
     #badge {
-        right: 119px;
+        right: 78px;
     }
 }
 
 @media(max-width: 1030px) {
     #badge {
-        right: 109px;
+        right:74px;
     }
 }
 
 @media(max-width: 970px) {
     #badge {
-        right: 100px;
+        right: 68px;
     }
 }
 
 @media(max-width: 910px) {
     #badge {
-        right: 94px;
+        right: 60px;
     }
 }
 
 @media(max-width: 850px) {
     #badge {
-        right: 87px;
+        right: 56px;
     }
 }
 

@@ -47,6 +47,7 @@ h1 {
     width: 90%;
     margin: auto;
     padding-bottom: 40px;
+    
 }
 
 .containerClothing, .containerAccessories {
@@ -72,6 +73,7 @@ h1 {
 
     #box:hover {
         box-shadow: 1px 6px 3px 0 rgb(150, 150, 150);
+        transform: scale(1.01);
     }
 
 
@@ -112,6 +114,7 @@ h1 {
 
 #details {
     padding: 0 15px;
+    height: 168px;
     text-transform: capitalize;
 }
 
@@ -124,6 +127,7 @@ h1 {
 
     #indexBox:hover {
         box-shadow: 1px 6px 3px 0 rgb(150, 150, 150);
+        transform: scale(1.01);
     }
 
     #indexBox a {

@@ -8,11 +8,11 @@
     </div>
     <div id="productDetails">
         <h1>@Model.ProductName</h1>
-        
+
         <div id="details">
-            <h3>@Model.ProductName</h3>
+            <h3 id="ProductName">@Model.ProductName</h3>
             <h4>@Model.BrandName</h4>
-            <h2><sup>₹</sup>@Model.SellingPrice</h2>
+            <sup>₹</sup><h2 id="ProductPrice">@Model.SellingPrice</h2>
             <del><h4>MRP @Model.Price</h4></del>
         </div>
         <div id="productPreview">
@@ -22,7 +22,7 @@
 
                 foreach (var images in AllImage)
                 {
-                    <img class="previewImg" id="previewImg" src="@images.ImagePath">
+                        <img class="previewImg" id="previewImg" src="@images.ImagePath">
                 }
             }
         </div>
@@ -33,7 +33,7 @@
 
 @section Images {
     <script>
-        
+
         $(document).ready(function () {
             $(".previewImg").click(function () {
                 var changeSrc = $(this).attr("src")
@@ -42,8 +42,41 @@
                 $(this).addClass('selected');
 
             });
+
+
+            // $('#button').click(function (e) {
+            //     e.preventDefault();
+            //     debugger
+            //     var ProductName = $("#ProductName").html;
+            //         var ProductPrice = $("#ProductPrice");
+            //         var obj = {
+            //             prodName: ProductName,
+            //             prodPrice: ProductPrice
+            //         };
+            //         AfterClick(obj);
+                
+            // });
+
+            // function AfterClick(obj) {
+            //     $.ajax({
+            //         url: '@Url.Action("ContentDetails", "Product")',
+            //         method: 'POST',
+            //         data: obj,
+            //         datatype: 'json',
+            //         success: function (data) {
+            //             debugger
+            //             console.log('Submission was successful.');
+            //             localStorage.setItem('Product_Name', obj.prodName);
+            //             localStorage.setItem('Product_Price', obj.prodPrice);
+            //         },
+            //         error: function (error) {
+            //             console.log('An error occurred.');
+            //             console.log(error);
+            //         }
+            //     });
+            // }
+
         });
-       
 
     </script>
 }

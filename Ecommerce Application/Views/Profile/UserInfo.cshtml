@@ -5,16 +5,31 @@
 @{
 
 }
-<div class="hstack gap-3 align-items float-start"  style="color: white;">
-    <span>Welcome @ViewBag.Username</span>
-</div>
-@section Blank {
-    @{
 
-    }
-}
-@section Blank2 {
-    @{
+<body>
+    <div id="profile">
+        <div id="account">
+            <div id="account-heading">Account</div>
+        </div>
 
-    }
-}
+        <div id="sidebar">
+            <div id="overview">Overview</div>
+            <div id="order">Order</div>
+            <div id="credit-details">Credit</div>
+            <div id="account-options">Account</div>
+        </div>
+
+        <div id="userinfo">
+            <div>
+                <div class="fas fa-user userIcon" id="userIcon"></div>
+                <div id="userName">@ViewBag.Username</div>
+            </div>
+        </div>
+
+        <div id="bottom-box">
+            <div>Orders</div>
+            <div>Collection & Wishlist</div>
+            <div>Credits</div>
+        </div>
+    </div>
+</body>

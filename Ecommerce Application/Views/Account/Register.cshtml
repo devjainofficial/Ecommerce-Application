@@ -3,65 +3,66 @@
 @{
     ViewData["Title"] = "Create";
 }
-<body style="background-image: url('../img/login/register.jpg');">
+<body style="background-image: url('../img/login/register.jpg');" loading="eager">
 
-<div class="wrapper" id="registerWrapper" style="overflow:hidden">
-    <div class="text-center mt-4 name">
-        Register
-    </div>
-    <form asp-controller="Account" asp-action="Register" id="RegisterForm" method="post" class="p-3 mt-3">
-        <div asp-validation-summary="ModelOnly"></div>
+    <div class="wrapper" id="registerWrapper" style="overflow:hidden">
+        <div class="text-center mt-4 name">
+            Register
+        </div>
+        <form asp-controller="Account" asp-action="Register" id="RegisterForm" method="post" class="p-3 mt-3">
+            <div asp-validation-summary="ModelOnly"></div>
 
-        <span asp-validation-for="Name" id="NameError"></span>
+            <span asp-validation-for="Name" id="NameError"></span>
             <div style="color:#fff">Name</div>
-        <div class="form-field d-flex align-items-center">
+            <div class="form-field d-flex align-items-center">
 
-            <input asp-for="Name" id="Name" type="text" autocomplete="off" />
-        </div>
+                <input asp-for="Name" id="Name" type="text" autocomplete="off" />
+            </div>
 
-        <span asp-validation-for="Username" id="UserNameError"></span>
+            <span asp-validation-for="Username" id="UserNameError"></span>
             <div style="color:#fff">Username</div>
-        <div class="form-field d-flex align-items-center">
+            <div class="form-field d-flex align-items-center">
 
-                <input asp-for="Username" id="UserName" type="text"  autocomplete="off" />
-        </div>
+                <input asp-for="Username" id="UserName" type="text" autocomplete="off" />
+            </div>
 
-        <span asp-validation-for="Email" id="EmailError"></span>
+            <span asp-validation-for="Email" id="EmailError"></span>
             <div style="color:#fff">Email</div>
-        <div class="form-field d-flex align-items-center">
+            <div class="form-field d-flex align-items-center">
 
-                <input asp-for="Email" id="Email" type="email"  autocomplete="off" />
-        </div>
+                <input asp-for="Email" id="Email" type="email" autocomplete="off" />
+            </div>
 
-        <span asp-validation-for="Password" id="PasswordError"></span>
+            <span asp-validation-for="Password" id="PasswordError"></span>
             <div style="color:#fff">Password</div>
-        <div class="form-field d-flex align-items-center">
+            <div class="form-field d-flex align-items-center">
 
                 <input asp-for="Password" id="Password" type="password" autocomplete="off" />
-        </div>
+            </div>
 
-        <span asp-validation-for="PasswordConfirm" id="ConfirmPasswordError"></span>
-        <div style="color:#fff">Confirm Password</div>
-        <div class="form-field d-flex align-items-center">
+            <span asp-validation-for="PasswordConfirm" id="ConfirmPasswordError"></span>
+            <div style="color:#fff">Confirm Password</div>
+            <div class="form-field d-flex align-items-center">
 
-            <input asp-for="PasswordConfirm" id="ConfirmPassword" type="password"  autocomplete="off" />
-        </div>
+                <input asp-for="PasswordConfirm" id="ConfirmPassword" type="password" autocomplete="off" />
+            </div>
 
             <div class="form-field d-flex align-items-center" style="display:none !important">
 
-            <input asp-for="Role" type="hidden" placeholder="Role" value="User" />
-            <span asp-validation-for="Role"></span>
-        </div>
+                <input asp-for="Role" type="hidden" placeholder="Role" value="User" />
+                <span asp-validation-for="Role"></span>
+            </div>
 
 
-        <div class="form-group d-flex justify-content-center align-items-center row">
-            <input type="submit" id="SubmitButton" value="Register" class="btn btn-primary" />
-        </div>
-    </form>
-        <div class="text-center fs-6" style="color:#fff;">Already have an account?
+            <div class="form-group d-flex justify-content-center align-items-center row" style="margin-top: 50px;">
+                <input type="submit" id="SubmitButton" value="Register" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="text-center fs-6" style="color:#fff;">
+            Already have an account?
             <h4><a href="/Account/Login" class="d-flex justify-content-center row">Click here</a></h4>
         </div>
-</div>
+    </div>
 </body>
 @section Scripts {
     <script type="text/javascript">
@@ -304,7 +305,7 @@
                                 'Congratulations',
                                 result.message,
                                 'success'
-                                                            
+
                             ).then(function () {
 
                                 // Automatically log in the user after successful registration

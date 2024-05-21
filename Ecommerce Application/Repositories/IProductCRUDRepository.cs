@@ -9,7 +9,8 @@ namespace Ecommerce_Application.Repositories
         Task<ProductDetails?> GetById(int id);
        /*
             IList
-    IQueryable 
+    IQueryable             
+       IEnumerable
             ICollection*/
     }
 }

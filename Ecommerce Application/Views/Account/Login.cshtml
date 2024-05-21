@@ -13,24 +13,24 @@
             <div style="color:white">Username</div>
             <div class="form-field d-flex align-items-center">
                 <span asp-validation-for="Username" class="fas fa-user"></span>
-                <input asp-for="Username" type="text" name="userName" id="userName" />
+                <input asp-for="Username" type="text" name="userName" id="userName" autocomplete="off" />
             </div>
 
             <h6 id="passwordError" asp-validation-for="Password"></h6>
             <div style="color:white">Password</div>
             <div class="form-field d-flex align-items-center">
                 <span asp-validation-for="Password" class="fas fa-key"></span>
-                <input asp-for="Password" type="password" id="pwd" />
+                <input asp-for="Password" type="password" id="pwd" autocomplete="off" />
             </div>
 
             </br>
             <div class="form-group d-flex justify-content-center align-items-center row">
-                <input type="submit" value="Login" id="loginbtn" class="btn mt-3" />
+                <input type="submit" value="Login" id="loginbtn" class="btn mt-3" autocomplete="off" />
             </div>
-            <div class="form-group d-flex" style="color:white" id="rememberMe">
-                <input type="checkbox" style="margin-right: 20px;" />
-                Remember Me
-            </div>
+            @*             <div class="form-group d-flex" style="color:white" id="rememberMe">
+            <input type="checkbox" id="CheckRememberMe" style="margin-right: 20px;" />
+            Remember Me
+            </div> *@
 
 
         </form>
@@ -104,9 +104,8 @@
                     datatype: 'html',
                     success: function (data) {
                         console.log('Submission was successful.');
-                        // debugger
-                        // localStorage.setItem('UserName', data.Username);
-                        // alert("You logged in Successfully", data.Uname)
+                        localStorage.setItem('LastLoggedIn_UserName', obj.Username);
+                        localStorage.setItem('LastLoggedIn_Password', obj.Password);
                         window.location.href = '/Home/index';
                     },
                     error: function (error) {
@@ -116,7 +115,18 @@
                 });
             }
         });
+
+
+        var UserNameField = document.getElementById('userName');
+        var PasswordField = document.getElementById('pwd');
+        if (UserNameField) {
+            UserNameField.value = localStorage.getItem("LastLoggedIn_UserName");
+        }
+        if (PasswordField) {
+            PasswordField.value = localStorage.getItem("LastLoggedIn_Password");
+        }
     </script>
+
 }
 
 @section Blank2 {

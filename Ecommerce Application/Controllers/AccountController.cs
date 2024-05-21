@@ -40,6 +40,12 @@ namespace Ecommerce_Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Login()
         {
+
+            var userName = HttpContext.Request.Cookies["Username"];
+            var password = HttpContext.Request.Cookies["Password"];
+            ViewBag.Username = userName;
+            ViewBag.Password = password;
+
             return View();
         }
 
@@ -55,6 +61,12 @@ namespace Ecommerce_Application.Controllers
             if (result.StatusCode == 1)
             {
                 HttpContext.Session.SetString("UserName", login.Username);
+
+                CookieOptions cookies = new CookieOptions();
+                cookies.Expires = DateTime.Now.AddMinutes(100);
+                HttpContext.Response.Cookies.Append("Username", login.Username);
+                HttpContext.Response.Cookies.Append("Password", login.Password);
+
                 var token = await authService.GenerateToken(login);
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
                 ViewBag.TokenString = tokenString;
