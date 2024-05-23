@@ -1,6 +1,9 @@
 ﻿@using Ecommerce_Application.Repositories
 @inject ICategoryCRUDRepository _categoryService;
+@inject ICartRepository _cartService;
 @using System.Security.Claims;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,14 +29,15 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/footer.css">
-    <link rel="stylesheet" href="~/css/Login.css">
     <link rel="stylesheet" href="~/css/index.css">
+    <link rel="stylesheet" href="~/css/Login.css">
     <link rel="stylesheet" href="~/css/ContentDetails.css">
     <link rel="stylesheet" href="~/css/Profile.css">
     <link rel="stylesheet" href="~/css/Cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 </head>
 <body>
     <header>
@@ -58,7 +62,7 @@
                                     <li>
                                         @if (category.ParentId == 0)
                                         {
-                                           
+
                                             //<a href="/Category/ProductsByCategory/?CategoryId=@category.CategoryId">@category.Name</a>
                                             <a href="/Category/@category.Name.Replace(' ', '-')/@category.CategoryId">@category.Name</a>
                                             <ul>
@@ -81,8 +85,18 @@
                         <input type="text" id="input" name="searchBox" placeholder="Search for Clothing and Accessories">
                     </div>
                     <!-- USER SECTION (CART AND USER ICON) -->
+                    @{
+                        var IsUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "User";
+                        var CountCart = 0;
+                        @if (IsUser)
+                        {
+                            var UserId = HttpContextAccessor?.HttpContext?.Session.GetString("UserId");
+                            var details = await _cartService.GetAllDetails(UserId);
+                            CountCart = details.Count;
+                        }
+                    }
                     <div id="user">
-                        <a href="/Cart/CartIndex"> <i class="fas fa-shopping-cart addedToCart"><div id="badge"> 0 </div></i></a>
+                        <a href="/Cart/CartIndex"> <i class="fas fa-shopping-cart addedToCart"><div id="badge"> @CountCart </div></i></a>
 
                         <div class="profile-dropdown">
 
@@ -91,7 +105,7 @@
                             @{
                                 var IsUserAuthenticated = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "User";
                                 @if (IsUserAuthenticated)
-                                {   
+                                {
                                     <ul style="padding-left:0rem;" class="profile-dropdown-list">
 
                                         <li class="profile-dropdown-list-item">
@@ -196,6 +210,7 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="/js/Profile_Dropdown.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

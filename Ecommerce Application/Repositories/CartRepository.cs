@@ -1,4 +1,5 @@
 ﻿using Ecommerce_Application.Models;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecommerce_Application.Repositories
@@ -6,15 +7,44 @@ namespace Ecommerce_Application.Repositories
     public class CartRepository : ICartRepository
     {
         private readonly DBContext _context;
+        
         public CartRepository(DBContext context)
         {
             _context = context;
+
         }
 
-        public async Task<List<CartItems>> GetAllItems(int userId)
+        public async Task<List<CartDetail>> GetAllDetails()
         {
-            return await _context.CartItems.ToListAsync();
+            var productDetails = await _context.ProductDetails.Include(p => p.Category).Include(p => p.ProductImages).ToListAsync();
+            var cartDetails = await _context.CartDetails.Include(c => c.ProductDetails).ToListAsync();
+            return cartDetails;
         }
 
+        public async Task<List<CartDetail>> GetAllDetails(string id)
+        {
+            var productDetails = await _context.ProductDetails.Include(p => p.Category).Include(p => p.ProductImages).ToListAsync();
+            var cartDetails = await _context.CartDetails
+                .Include(c => c.ProductDetails)
+                .Where(c => c.Id == id)
+                .ToListAsync();
+
+            return cartDetails;
+        }
+
+        public void InsertCart(CartDetail cart)
+        {
+            _context.CartDetails.Add(cart);
+        }
+        public void UpdateCart(CartDetail cart)
+        {
+           
+            _context.Update(cart);
+           
+        }
+        public void SaveChangesAsync()
+        {
+            _context.SaveChanges();
+        }
     }
 }

@@ -4,6 +4,10 @@ namespace Ecommerce_Application.Repositories
 {
     public interface ICartRepository
     {
-        Task<List<CartItems>> GetAllItems(int userId);
+        Task<List<CartDetail>> GetAllDetails();
+        Task<List<CartDetail>> GetAllDetails(string id);
+        void InsertCart(CartDetail cart);
+        void UpdateCart(CartDetail cart);
+        void SaveChangesAsync();
     }
 }

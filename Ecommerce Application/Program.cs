@@ -25,6 +25,8 @@ namespace Ecommerce_Application
             builder.Services.AddScoped<IProductCRUDRepository, ProductCRUDRepository>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
             builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

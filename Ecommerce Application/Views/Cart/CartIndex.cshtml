@@ -1,20 +1,58 @@
-﻿<div id="cartMainContainer">
-    <h1>Checkout </h1>
-    <h3 id="totalItem">Total Items: 4</h3>
+﻿@using Ecommerce_Application.Repositories
+@inject ICartRepository _cartService;
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+@using System.Security.Claims;
+
+<div id="cartMainContainer">
+    <h1 style="display:flex; justify-content: space-evenly">
+        Checkout
+    </h1>
+    @{
+        var CountCart = 0;
+        var UserId = "";
+        var IsUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "User";
+        @if (IsUser)
+        {
+            UserId = HttpContextAccessor?.HttpContext?.Session.GetString("UserId");
+            var detail = await _cartService.GetAllDetails(UserId);
+            CountCart = detail.Count;
+
+        }
+
+    var details = await _cartService.GetAllDetails(UserId);
+    }
+    <h3 id="totalItem">Total Items: @CountCart</h3>
     <div id="cartContainer">
+        @{
+            var TotalAmount = 0; 
+        }
+
         <div id="boxCartContainer">
-            <div id="cartBox">
-                <img id="cartImage" src="https://assets.myntassets.com/h_1440,q_100,w_1080/v1/assets/images/7579188/2018/11/5/08a7b230-ee8f-46c0-a945-4e835a3c01c01541402833619-United-Colors-of-Benetton-Men-Sweatshirts-1271541402833444-1.jpg">
-                <h3>Men Navy Blue Solid Sweatshirt × 4</h3>
-                <h4>Amount: Rs2599</h4>
-            </div>
+            @foreach (var item in details)
+            {
+                <div id="cartBox">
+                    @if (item is CartDetail cart)
+                    {
+                        <a href="/Product/@cart.ProductDetails.ProductName.Replace(" ", "-")/@cart.ProductDetails.ProductId">
+                            <img id="cartImage" src="@cart.ProductDetails.ThumbImage">
+                        </a>
+                        <h3>@cart.ProductDetails.ProductName × @cart.Quantity</h3>
+                        <h4>Total Amount: Rs. @(cart.Quantity * cart.ProductDetails.SellingPrice)</h4>
+                        TotalAmount += cart.Quantity * cart.ProductDetails.SellingPrice;
+                    }
+                </div>
+            }
         </div>
+
+
         <div id="totalCartContainer">
             <div id="total">
                 <h2>Total Amount</h2>
-                <h4>Amount: Rs 10396</h4>
+                <h4>Amount: Rs. @TotalAmount</h4>
                 <div id="button"><button><a href="/orderPlaced.html?">Place Order</a></button></div>
             </div>
         </div>
+
     </div>
 </div>

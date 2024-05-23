@@ -26,7 +26,11 @@
                 }
             }
         </div>
-        <div id="button"><button>Add to Cart</button></div>
+
+
+        <div id="button"><button class="addProduct">Add To Cart</button></div>
+
+
     </div>
 </div>
 
@@ -44,40 +48,39 @@
             });
 
 
-            // $('#button').click(function (e) {
-            //     e.preventDefault();
-            //     debugger
-            //     var ProductName = $("#ProductName").html;
-            //         var ProductPrice = $("#ProductPrice");
-            //         var obj = {
-            //             prodName: ProductName,
-            //             prodPrice: ProductPrice
-            //         };
-            //         AfterClick(obj);
-                
-            // });
+            $(button).click(function (e) {
+                e.preventDefault();
+                debugger
+                var ProductId = @Model.ProductId;
 
-            // function AfterClick(obj) {
-            //     $.ajax({
-            //         url: '@Url.Action("ContentDetails", "Product")',
-            //         method: 'POST',
-            //         data: obj,
-            //         datatype: 'json',
-            //         success: function (data) {
-            //             debugger
-            //             console.log('Submission was successful.');
-            //             localStorage.setItem('Product_Name', obj.prodName);
-            //             localStorage.setItem('Product_Price', obj.prodPrice);
-            //         },
-            //         error: function (error) {
-            //             console.log('An error occurred.');
-            //             console.log(error);
-            //         }
-            //     });
-            // }
+                AfterClick(ProductId);
+
+            });
+            function AfterClick(ProductId) {
+
+            debugger
+                $.ajax({
+                    url: '@Url.Action("AddCart", "Cart")',
+                    method: 'POST',
+                    data: { Id: ProductId },
+                    dataType: 'json',
+                    success: function (status) {
+                        debugger
+                        toastr.success("Your Item Successfully added to Cart.", "Congrats!!", { "progressBar": true, "positionClass": "toast-bottom-right" });
+                            console.log('Submission was successful.');
+                           // window.location.href = '@Url.Action("CartIndex", "Cart")';
+                    },
+                    error: function (error) {
+                        debugger
+                        console.log('An error occurred.');
+                        toastr.error("There is Some Problem to add this Product. Please Try Again Later.", "Sorry!", { "progressBar": true, "positionClass": "toast-bottom-right" })
+                        
+                        console.log(error);
+                    }
+                });
+            }
 
         });
 
     </script>
 }
-

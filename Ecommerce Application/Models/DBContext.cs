@@ -12,6 +12,6 @@ namespace Ecommerce_Application.Models
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductDetails> ProductDetails { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
-        public DbSet<CartItems> CartItems { get; set; }
+        public DbSet<CartDetail> CartDetails { get; set; }
     }
 }

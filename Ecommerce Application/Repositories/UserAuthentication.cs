@@ -21,6 +21,7 @@ namespace Ecommerce_Application.Repositories
             this._config = config;
         }
 
+
         public async Task<Status> RegisterAsync(Registration register)
         {
             var status = new Status();
@@ -152,6 +153,7 @@ namespace Ecommerce_Application.Repositories
             }
             return null;
         }
+
     }
 }
 

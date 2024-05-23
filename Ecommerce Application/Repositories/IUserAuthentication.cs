@@ -11,5 +11,6 @@ namespace Ecommerce_Application.Repositories
         Task<Status> RegisterAsync(Registration register);
         /*Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);*/
         Task<JwtSecurityToken> GenerateToken(Login user);
+       
     }
 }

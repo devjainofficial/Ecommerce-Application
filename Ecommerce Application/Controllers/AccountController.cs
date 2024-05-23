@@ -1,6 +1,7 @@
 ﻿using Ecommerce_Application.Models;
 using Ecommerce_Application.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using System.IdentityModel.Tokens.Jwt;
@@ -10,9 +11,13 @@ namespace Ecommerce_Application.Controllers
     public class AccountController : Controller
     {
         private IUserAuthentication authService;
-        public AccountController(IUserAuthentication authService)
+        private UserManager<User> userManager;
+        private IHttpContextAccessor httpContextAccessor;
+        public AccountController(IUserAuthentication authService, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.authService = authService;
+            this.userManager = userManager;
+            this.httpContextAccessor = httpContextAccessor;
         }
         [HttpGet]
         /*        [Authorize(Roles ="Admin")]
@@ -40,9 +45,10 @@ namespace Ecommerce_Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Login()
         {
-
+           
             var userName = HttpContext.Request.Cookies["Username"];
             var password = HttpContext.Request.Cookies["Password"];
+            
             ViewBag.Username = userName;
             ViewBag.Password = password;
 
@@ -60,6 +66,10 @@ namespace Ecommerce_Application.Controllers
             var result = await authService.LoginAsync(login);
             if (result.StatusCode == 1)
             {
+                var principal = httpContextAccessor.HttpContext.User;
+                var UserId = userManager.GetUserId(principal);
+                
+                HttpContext.Session.SetString("UserId", UserId);
                 HttpContext.Session.SetString("UserName", login.Username);
 
                 CookieOptions cookies = new CookieOptions();

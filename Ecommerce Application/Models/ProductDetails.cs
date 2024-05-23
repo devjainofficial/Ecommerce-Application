@@ -23,5 +23,7 @@ namespace Ecommerce_Application.Models
         [ValidateNever]
         [ForeignKey(nameof(CategoryId))]
         public Category? Category { get; set; }
+
+        
     }
 }
