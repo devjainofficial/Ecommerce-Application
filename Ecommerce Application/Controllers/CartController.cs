@@ -219,15 +219,6 @@ namespace Ecommerce_Application.Controllers
 
             return RedirectToAction("CartIndex");
 
-            /* var updatedCount = dataCart.FirstOrDefault(c => c.ProductId == id)?.Quantity ?? 0;
-                        var status = new Status();
-                        var response = new
-                        {
-                            status = status,
-                            count = updatedCount
-                        };
-                        return Ok(response);*/
-
         }
 
 
