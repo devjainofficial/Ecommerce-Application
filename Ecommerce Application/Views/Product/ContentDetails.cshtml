@@ -12,8 +12,8 @@
         <div id="details">
             <h3 id="ProductName">@Model.ProductName</h3>
             <h4>@Model.BrandName</h4>
-            <sup>₹</sup><h2 id="ProductPrice">@Model.SellingPrice</h2>
-            <del><h4>MRP @Model.Price</h4></del>
+            <h2 id="ProductPrice"><sup>₹</sup>@Model.SellingPrice</h2>
+            <del style="color:cadetblue;"><h4> MRP @Model.Price</h4></del>
         </div>
         <div id="productPreview">
             <h3>Product Preview</h3>
@@ -22,13 +22,13 @@
 
                 foreach (var images in AllImage)
                 {
-                        <img class="previewImg" id="previewImg" src="@images.ImagePath">
+                    <img class="previewImg" id="previewImg" src="@images.ImagePath">
                 }
             }
         </div>
 
 
-        <div id="button"><button class="addProduct">Add To Cart</button></div>
+        <div id="Loginbutton"><button class="addProduct">Add To Cart</button></div>
 
 
     </div>
@@ -48,39 +48,69 @@
             });
 
 
-            $(button).click(function (e) {
+            $('#Loginbutton').click(function (e) {
                 e.preventDefault();
-                debugger
                 var ProductId = @Model.ProductId;
-
-                AfterClick(ProductId);
-
+                var localData = localStorage.getItem("cart");
+                AfterClick(ProductId, localData);
             });
-            function AfterClick(ProductId) {
 
-            debugger
+            function AfterClick(ProductId, localData) {
+                debugger
                 $.ajax({
                     url: '@Url.Action("AddCart", "Cart")',
                     method: 'POST',
-                    data: { Id: ProductId },
+                    data: { id: ProductId, cartData: localData },
                     dataType: 'json',
-                    success: function (status) {
+                    success: function (response) {
                         debugger
-                        toastr.success("Your Item Successfully added to Cart.", "Congrats!!", { "progressBar": true, "positionClass": "toast-bottom-right" });
-                            console.log('Submission was successful.');
-                           // window.location.href = '@Url.Action("CartIndex", "Cart")';
+                        if (response.user == null) {
+                            updateLocalStorage(response.cart);
+                        }
+                        updateCartBadge(response);
+                        toastr.success("Your item was successfully added to the cart.", "Congrats!", { "progressBar": true, "positionClass": "toast-bottom-right" });
+                        console.log('Submission was successful.');
                     },
                     error: function (error) {
-                        debugger
                         console.log('An error occurred.');
-                        toastr.error("There is Some Problem to add this Product. Please Try Again Later.", "Sorry!", { "progressBar": true, "positionClass": "toast-bottom-right" })
-                        
+                        toastr.error("There was a problem adding this product to the cart. Please try again later.", "Sorry!", { "progressBar": true, "positionClass": "toast-bottom-right" });
                         console.log(error);
                     }
                 });
+            }
+
+            function updateLocalStorage(cartItems) {
+                debugger
+                var existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+                cartItems.forEach(function (cartItem) {
+                    var index = existingCart.findIndex(function (item) {
+                        return item.productId === cartItem.productId;
+                    });
+                    if (index !== -1) {
+                        existingCart[index].quantity += cartItem.quantity;
+                    } else {
+                        existingCart.push(cartItem);
+                    }
+                });
+                localStorage.setItem("cart", JSON.stringify(existingCart));
+            }
+
+            function updateCartBadge(response) {
+                if (response.user == null) {
+                    var existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+                }
+                else{
+                    var existingCart = response.cart;
+                }
+                $("#badge").text(existingCart.length);
             }
 
         });
 
     </script>
 }
+
+
+
+
+

@@ -4,55 +4,187 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @using System.Security.Claims;
 
-<div id="cartMainContainer">
-    <h1 style="display:flex; justify-content: space-evenly">
-        Checkout
-    </h1>
-    @{
-        var CountCart = 0;
-        var UserId = "";
-        var IsUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "User";
-        @if (IsUser)
-        {
-            UserId = HttpContextAccessor?.HttpContext?.Session.GetString("UserId");
-            var detail = await _cartService.GetAllDetails(UserId);
-            CountCart = detail.Count;
 
-        }
 
-    var details = await _cartService.GetAllDetails(UserId);
+@{
+    var CountCart = 0;
+    var UserId = "";
+    List<CartDetail> cartDetails = new List<CartDetail>();
+    var IsUser = User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value == "User";
+    @if (IsUser)
+    {
+        UserId = HttpContextAccessor?.HttpContext?.Session.GetString("UserId");
     }
-    <h3 id="totalItem">Total Items: @CountCart</h3>
-    <div id="cartContainer">
-        @{
-            var TotalAmount = 0; 
-        }
-
-        <div id="boxCartContainer">
-            @foreach (var item in details)
-            {
-                <div id="cartBox">
-                    @if (item is CartDetail cart)
-                    {
-                        <a href="/Product/@cart.ProductDetails.ProductName.Replace(" ", "-")/@cart.ProductDetails.ProductId">
-                            <img id="cartImage" src="@cart.ProductDetails.ThumbImage">
-                        </a>
-                        <h3>@cart.ProductDetails.ProductName × @cart.Quantity</h3>
-                        <h4>Total Amount: Rs. @(cart.Quantity * cart.ProductDetails.SellingPrice)</h4>
-                        TotalAmount += cart.Quantity * cart.ProductDetails.SellingPrice;
-                    }
-                </div>
-            }
-        </div>
-
-
-        <div id="totalCartContainer">
-            <div id="total">
-                <h2>Total Amount</h2>
-                <h4>Amount: Rs. @TotalAmount</h4>
-                <div id="button"><button><a href="/orderPlaced.html?">Place Order</a></button></div>
+    @if (UserId == "")
+    {
+        <div id="cartMainContainer">
+            <h1 style="display:flex; justify-content: space-evenly">
+                Checkout
+            </h1>
+            <div id="cartContainer">
             </div>
         </div>
+    }
+    else
+    {
+        cartDetails = await _cartService.GetAllDetails(UserId);
+        CountCart = cartDetails.Count;
+        @if (CountCart == 0)
+        {
+            <div style="display:flex; justify-content:center; flex-direction: column; align-items: center; flex-wrap: nowrap;">
 
-    </div>
-</div>
+                <div style=" padding-top: 10%; color:white; font-size: 2rem;">Sorry, You haven't Added Any items yet.</div>
+                <img src="~/cart.png" style="height: 30%; width: 30%;" />
+                <a href="/Home/index">
+                    <button>Add Some Items</button>
+                </a>
+            </div>
+
+        }
+        else
+        {
+
+            <div id="cartMainContainer">
+                <h1 style="display:flex; justify-content: space-evenly">
+                    Checkout
+                </h1>
+
+                @{
+                    var TotalCount = 0;
+                }
+                <div id="cartContainer">
+                    @{
+                        var TotalAmount = 0;
+                    }
+
+                    <div id="boxCartContainer">
+                        @foreach (var item in cartDetails)
+                        {
+                            <div id="cartBox">
+                                @if (item is CartDetail cart)
+                                {
+                                    <a href="/Product/@cart.ProductDetails.ProductName.Replace(" ", "-")/@cart.ProductDetails.ProductId">
+                                        <img id="cartImage" src="@cart.ProductDetails.ThumbImage">
+                                    </a>
+
+                                    <h3>@cart.ProductDetails.ProductName × @cart.Quantity</h3>
+                                    <h4>Total Amount: Rs. @(cart.Quantity * cart.ProductDetails.SellingPrice)</h4>
+
+                                    <div id="unary">
+                                        <button data-id="@cart.ProductDetails.ProductId" data-operation="minus" class="unaryButton" id="minus">-</button>
+                                        <div id="count"> @cart.Quantity </div>
+                                        <button data-id="@cart.ProductDetails.ProductId" data-operation="plus" class="unaryButton" id="plus">+</button>
+                                    </div>
+                                    TotalAmount += cart.Quantity * cart.ProductDetails.SellingPrice;
+                                    TotalCount += cart.Quantity;
+                                }
+                            </div>
+                        }
+                    </div>
+
+
+                    <div id="totalCartContainer">
+                        <h3 id="totalItem">Total Items: @TotalCount</h3>
+                        <div id="total">
+                            <div style="font-size: 1.5rem; color: white;">Grand Total:</div>
+                            <h4>Rs. @TotalAmount</h4>
+                            <a href="/StripeSettings/PlaceOrder/?Amount=@TotalAmount"><div id="button"><button>Place Order</button></div></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $(".unaryButton").click(function (e) {
+                e.preventDefault();
+                var ProductId = $(this).data("id");
+                var operation = $(this).data("operation");
+                AfterClick(ProductId, operation);
+            });
+
+            function AfterClick(ProductId, operation) {
+                debugger
+                $.ajax({
+                    url: '@Url.Action("unaryOperation", "Cart")',
+                    method: 'POST',
+                    data: { id: ProductId, operation: operation },
+                    dataType: 'html',
+                    success: function (response) {
+                        console.log('Submission was successful.');
+                        $('#cartMainContainer').html(response);
+                        $('#badge').replaceWith($(response).find('#badge'));
+                        $('#cartMainContainer').replaceWith($(response).find('#cartMainContainer'));
+                    },
+                    error: function (error) {
+                        console.log('An error occurred.');
+                        console.log(error);
+                    }
+                });
+            }
+
+        });
+    </script>
+}
+
+@section LocalData {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+            var localCart = JSON.parse(localStorage.getItem("cart"));
+            var TotalCount = 0;
+            var TotalAmount = 0;
+
+            $.each(localCart, function (index, item) {
+                var productDetails = item.productDetails;
+                var quantity = item.quantity;
+
+                $("#cartTemplate").tmpl({ productDetails: productDetails, quantity: quantity }).appendTo("#cartContainer");
+
+                TotalAmount += quantity * productDetails.sellingPrice;
+                TotalCount += quantity;
+            });
+            $("#cartTotalTemplate").tmpl({ TotalAmount: TotalAmount, TotalCount: TotalCount }).appendTo("#cartContainer");
+            $("#totalItem").text("Total Items: " + TotalCount);
+            $("#totalAmount").text("Rs. " + TotalAmount);
+
+        });
+    </script>
+
+    <script id="cartTemplate" type="text/x-jquery-tmpl">
+       
+        <div id="boxCartContainer">
+           <div id="cartBox">
+               <a href="/Product/${productDetails.productName.replace(" ", "-")}/${productDetails.productId}">
+                   <img id="cartImage" src="${productDetails.thumbImage}">
+               </a>
+
+               <h3>${productDetails.productName} × ${quantity}</h3>
+               <h4>Total Amount: Rs. ${(quantity * productDetails.sellingPrice)}</h4>
+           </div>
+        </div>
+    </script>
+    <script id="cartTotalTemplate" type="text/x-jquery-tmpl">
+
+        <div id="totalCartContainer">
+            <h3 id="totalItem"></h3>
+            <div id="total">
+                <div style="font-size: 1.5rem; color: white;">Grand Total:</div>
+                <h4 id="totalAmount"></h4>
+                <a href="/Account/Login">
+                    <div id="button"><button>Place Order</button></div>
+                </a>
+            </div>
+        </div>
+    </script>
+}

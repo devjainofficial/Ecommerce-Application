@@ -1,0 +1,43 @@
+﻿body{
+    height: 0;
+}
+#totalOrderContainer {
+    width: 50%;
+    padding: 20px;
+    margin: 20% 25% ;
+    background-color: black;
+    border-radius: 10px;
+    box-shadow: 1px 2px 6px 2px rgb(219, 219, 219);
+}
+
+    #totalOrderContainer:hover {
+        box-shadow: 0px 1px 3px 2px rgb(185, 185, 185);
+    }
+
+    #totalOrder{
+        display:grid;
+        align-content:center;
+        text-align:center;
+        
+    }
+#Orderbutton {
+    padding: 8px 12px;
+    background-color: rgb(3, 122, 122);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    #Orderbutton a {
+        text-decoration: none;
+        color: white;
+        font-size: 15px;
+    }
+
+    #Orderbutton:hover {
+        background-color: rgb(3, 94, 94);
+    }
+
+    #Orderbutton a:focus {
+        outline: none;
+    }

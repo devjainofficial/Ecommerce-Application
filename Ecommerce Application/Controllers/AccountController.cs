@@ -45,7 +45,7 @@ namespace Ecommerce_Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Login()
         {
-           
+         
             var userName = HttpContext.Request.Cookies["Username"];
             var password = HttpContext.Request.Cookies["Password"];
             
@@ -57,7 +57,7 @@ namespace Ecommerce_Application.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
-        {
+         {
             if (!ModelState.IsValid)
             {
                 return View(login);

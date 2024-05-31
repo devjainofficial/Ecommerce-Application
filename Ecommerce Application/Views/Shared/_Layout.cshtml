@@ -3,6 +3,7 @@
 @inject ICartRepository _cartService;
 @using System.Security.Claims;
 @using Microsoft.AspNetCore.Http;
+@using Ecommerce_Application.Repositories;
 @inject IHttpContextAccessor HttpContextAccessor;
 
 <!DOCTYPE html>
@@ -34,6 +35,8 @@
     <link rel="stylesheet" href="~/css/ContentDetails.css">
     <link rel="stylesheet" href="~/css/Profile.css">
     <link rel="stylesheet" href="~/css/Cart.css">
+    <link rel="stylesheet" href="~/css/PlaceOrder.css">
+    <link rel="stylesheet" href="~/css/OrderPlaced.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.min.css">
@@ -95,6 +98,7 @@
                             CountCart = details.Count;
                         }
                     }
+
                     <div id="user">
                         <a href="/Cart/CartIndex"> <i class="fas fa-shopping-cart addedToCart"><div id="badge"> @CountCart </div></i></a>
 
@@ -208,6 +212,8 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="https://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.11.0/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -215,6 +221,19 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
     @await RenderSectionAsync("Images", required: false)
+    @await RenderSectionAsync("LocalData", required: false)
 
+    <script>
+
+        $(document).ready(function () {
+            // debugger
+            var countCart = $("#badge").text();
+            if (countCart == 0) {
+                var localCart = JSON.parse(localStorage.getItem("cart"));
+                var count = localCart.length;
+                $("#badge").text(count);
+            }
+        });
+    </script>
 </body>
 </html>

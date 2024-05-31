@@ -1,7 +1,7 @@
 ﻿<form method="post" action="/StripeSettings/CreateCheckoutSession">
     <div style="margin-top: 10rem;">
         <label for="name">Amount</label>
-        <input type="text" id="amount" name="amount" value=""/>
+        <input type="text" id="amount" name="amount" value="@ViewBag.Amount" />
     </div>
 
     <button type="submit">Checkout</button>

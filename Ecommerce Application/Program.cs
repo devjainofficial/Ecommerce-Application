@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -12,11 +13,13 @@ namespace Ecommerce_Application
     public class Program
     {
         public static void Main(string[] args)
-     {
+        {
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
             builder.Services.AddScoped<IUserAuthentication, UserAuthentication>();
@@ -27,6 +30,7 @@ namespace Ecommerce_Application
             builder.Services.AddScoped<IProductImageRepository, ProductImageRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
             builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("StripeSettings"));
+
             builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

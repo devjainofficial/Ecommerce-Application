@@ -42,9 +42,23 @@ namespace Ecommerce_Application.Repositories
             _context.Update(cart);
            
         }
+
+        public void DeleteProductIdFromCart(int productId)
+        {
+            CartDetail productRemove = _context.CartDetails.FirstOrDefault(x => x.ProductId == productId);
+            _context.CartDetails.Remove(productRemove);
+
+        }
+        public void DeleteCart(CartDetail cart)
+        {
+            var cartId = cart.CartId;
+            CartDetail cartRemove = _context.CartDetails.Find(cartId);
+            _context.CartDetails.Remove(cartRemove);
+        }
         public void SaveChangesAsync()
         {
             _context.SaveChanges();
         }
     }
 }
+

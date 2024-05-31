@@ -1,0 +1,28 @@
+﻿
+
+@{
+    var Amount = ViewBag.Amount;
+}
+
+<form method="post" action="/StripeSettings/CreateCheckoutSession/?amount=@Amount">
+    <div id="totalOrderContainer">
+        <div id="totalOrder">
+            <div style="font-weight: bold; font-size: 2rem; color: white;">Total Amount</div>
+            <div style="font-weight: bold; font-size: 1rem; color: white;">Amount: Rs. @Amount</div>
+            <button type="submit" id="button" >Checkout</button>
+        </div>
+    </div>
+
+</form>
+@section Blank2 {
+    @{
+
+    }
+}
+@section Blank {
+    @{
+
+    }
+}
+
+   

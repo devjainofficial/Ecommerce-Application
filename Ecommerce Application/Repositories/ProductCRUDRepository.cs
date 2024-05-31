@@ -14,12 +14,12 @@ namespace Ecommerce_Application.Repositories
         public async Task<List<ProductDetails>> GetAllDetails()
         {
             return await _context.ProductDetails.Include(p => p.Category).Include(p => p.ProductImages).ToListAsync();
-           
-        }  
+
+        }
         public async Task<List<ProductDetails>> GetLatestProducts()
         {
             return await _context.ProductDetails.OrderByDescending(p => p.ProductUploadTime).Take(10).Include(p => p.Category).Include(p => p.ProductImages).ToListAsync();
-           
+
         }
         public async Task<ProductDetails?> GetById(int id)
         {

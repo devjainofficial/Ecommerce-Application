@@ -8,6 +8,8 @@ namespace Ecommerce_Application.Repositories
         Task<List<CartDetail>> GetAllDetails(string id);
         void InsertCart(CartDetail cart);
         void UpdateCart(CartDetail cart);
+        void DeleteProductIdFromCart(int productId);
+        void DeleteCart(CartDetail cart);
         void SaveChangesAsync();
     }
 }

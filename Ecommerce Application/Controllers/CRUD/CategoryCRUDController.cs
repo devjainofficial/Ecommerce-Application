@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Ecommerce_Application.Models;
 using Ecommerce_Application.Repositories;
 
-namespace Ecommerce_Application.Controllers
+namespace Ecommerce_Application.Controllers.CRUD
 {
     public class CategoryCRUDController : Controller
     {
@@ -38,7 +38,7 @@ namespace Ecommerce_Application.Controllers
             {
                 return NotFound();
             }
-            if(category.IsAccessories == true)
+            if (category.IsAccessories == true)
             {
                 ViewBag.IsAccessories = "True";
             }
@@ -46,7 +46,7 @@ namespace Ecommerce_Application.Controllers
             {
                 ViewBag.IsAccessories = "False";
             }
-            
+
             return View(category);
         }
 
@@ -151,7 +151,7 @@ namespace Ecommerce_Application.Controllers
                 _category.DeleteCategory(id);
             }
 
-             _category.SaveChangesAsync();
+            _category.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -97,19 +97,43 @@
             }
 
             function AfterSubmit(obj) {
+                debugger;
                 $.ajax({
                     url: '@Url.Action("Login", "Account")',
                     method: 'POST',
                     data: obj,
-                    datatype: 'html',
+                    dataType: 'json',
                     success: function (data) {
-                        console.log('Submission was successful.');
+                        console.log('Login successful.');
                         localStorage.setItem('LastLoggedIn_UserName', obj.Username);
                         localStorage.setItem('LastLoggedIn_Password', obj.Password);
-                        window.location.href = '/Home/index';
+                        debugger
+                        var localData = localStorage.getItem("cart");
+                        if (localData) {
+                            
+                            $.ajax({
+                                url: '@Url.Action("AddCart", "Cart")',
+                                method: 'POST',
+                                data: { cartData: localData },
+                                dataType: 'json',
+                                success: function (response) {
+                                    console.log('Cart data sent successfully.');
+                                    localStorage.removeItem("cart");
+                                    
+                                    window.location.href = origin; 
+                                },
+                                error: function (error) {
+                                    console.log('Error sending cart data.');
+                                    console.log(error);
+                                }
+                            });
+                        } else {
+                            console.log('No cart data found in localStorage.');
+                            window.location.href = '/Home/index';
+                        }
                     },
                     error: function (error) {
-                        console.log('An error occurred.');
+                        console.log('Login error.');
                         console.log(error);
                     }
                 });
@@ -139,3 +163,8 @@
 
     }
 }
+
+
+
+
+

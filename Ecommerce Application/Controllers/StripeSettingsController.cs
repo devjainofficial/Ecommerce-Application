@@ -13,16 +13,21 @@ namespace Ecommerce_Application.Controllers
         public StripeSettingsController(IOptions<StripeSettings> stripeSettings)
         {
             _stripeSettings = stripeSettings.Value;
+          
         }
         public IActionResult Index()
         {
             return View();
         }
-
+        public IActionResult PlaceOrder(int Amount)
+        {
+            ViewBag.Amount = Amount;
+            return View();
+        }
         public IActionResult CreateCheckoutSession(string amount)
         {
-            var currency = "usd";
-            var successUrl = "https://localhost:7210/Home/Success";
+            var currency = "inr";
+            var successUrl = "https://localhost:7210/StripeSettings/Success";
             var cancelUrl = "https://localhost:7210/Home/Cancel";
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
@@ -42,8 +47,8 @@ namespace Ecommerce_Application.Controllers
                             UnitAmount = Convert.ToInt32(amount) * 100,
                             ProductData = new SessionLineItemPriceDataProductDataOptions
                             {
-                                Name = "Product Name",
-                                Description = "Product Description"
+                                Name = "Payment Amount"
+                                
                             }
                         },
                         Quantity = 1
@@ -59,9 +64,10 @@ namespace Ecommerce_Application.Controllers
             return Redirect(session.Url);
         }
 
-        public async Task<IActionResult> success()
+        public async Task<IActionResult> Success()
         {
-            return View("Index");
+
+            return RedirectToAction("OrderSuccess", "Cart");
         }
 
         public IActionResult cancel()

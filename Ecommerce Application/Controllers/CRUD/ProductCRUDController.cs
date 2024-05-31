@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Ecommerce_Application.Models;
 
-namespace Ecommerce_Application.Controllers
+namespace Ecommerce_Application.Controllers.CRUD
 {
     public class ProductCRUDController : Controller
     {
@@ -105,7 +105,7 @@ namespace Ecommerce_Application.Controllers
                     var UpdateDetails = product.ProductUploadTime;
                     productDetails.ProductUploadTime = UpdateDetails;
                    */
-                   _context.Update(productDetails);
+                    _context.Update(productDetails);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
