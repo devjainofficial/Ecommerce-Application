@@ -16,7 +16,7 @@
 
 #check {
     animation-name: OrderSuccess;
-    animation-duration: 4s;
+    animation-duration: 5s;
 }
 @keyframes OrderSuccess {
     0% {
